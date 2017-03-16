@@ -1,4 +1,5 @@
 public class Board {
+    /*
     int[][][] gameBoard = new int[400][400][5];
     //3rd dimension is Level, Terrain, TileID, Meeples (T/F), Valid Space (T/F)
     private int tileID = 1;
@@ -59,4 +60,5 @@ public class Board {
             System.out.println();
         }
     }
+    */
 }

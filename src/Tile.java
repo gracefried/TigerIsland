@@ -1,23 +1,23 @@
 public class Tile {
-    private int tile1;
-    private int tile2;
-    private int tile3;
+    private Hexagon topHex;
+    private Hexagon rightHex;
+    private Hexagon leftHex;
 
-    public Tile() {
-        this.tile1 = 2;
-        this.tile2 = 2;
-        this.tile3 = 9; //9 is volcano
+    public Tile(TerrainType topType, TerrainType rightType, TerrainType leftType) {
+        topHex = new Hexagon(topType);
+        rightHex = new Hexagon(rightType);
+        leftHex = new Hexagon(leftType);
     }
 
-    public int getTile1() {
-        return this.tile1;
-    }
-
-    public int getTile2() {
-        return this.tile2;
-    }
-
-    public int getTile3() {
-        return this.tile3;
+    public TerrainType getTerrainTypeForPosition(HexagonPosition position) {
+        switch (position) {
+            case TOP:
+                return topHex.getTerrainType();
+            case RIGHT:
+                return rightHex.getTerrainType();
+            case LEFT:
+                return leftHex.getTerrainType();
+        }
+        return null;
     }
 }

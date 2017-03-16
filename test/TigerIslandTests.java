@@ -1,7 +1,8 @@
 import org.junit.Assert;
 import org.junit.Test;
 
-public class TigerIslandTest {
+public class TigerIslandTests {
+    /*
     @Test
     //Creates 2 players, sets player2 turn to false and verifies
     public void testAlternateTurns() {
@@ -32,4 +33,5 @@ public class TigerIslandTest {
 
         gameBoard.printBoard();
     }
+    */
 }
