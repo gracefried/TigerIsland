@@ -1,9 +1,9 @@
 /**
  * Created by gonzalonunez on 3/16/17.
  */
-public class GameActionPerformer {
+public class GameAction {
     public interface TileAction {
-        int[] action(Tile tile, Board board); // expects a board coordinate back aka: [x, y]
+        TileCoordinate action(Tile tile, Board board);
     }
 
     public interface BuildAction {
@@ -13,7 +13,7 @@ public class GameActionPerformer {
     public TileAction tileAction;
     public BuildAction buildAction;
 
-    public GameActionPerformer(TileAction tileAction, BuildAction buildAction) {
+    public GameAction(TileAction tileAction, BuildAction buildAction) {
         this.tileAction = tileAction;
         this.buildAction = buildAction;
     }
