@@ -21,6 +21,10 @@ public class Board {
         if (!gameBoard[yPosition][xPosition].getSpaceIsValid()) {
             return false;
         } else {
+            /*
+                No rule enforcement here except for placing in a valid location
+             */
+
             for (int ii = yPosition; ii < yPosition+2; ii++) {
                 for (int jj = xPosition; jj < xPosition+3; jj++) {
                     gameBoard[ii][jj].setLevel(1);
@@ -49,5 +53,17 @@ public class Board {
             }
             System.out.println();
         }
+    }
+
+    public TerrainType getTerrainTypeAtPosition(int xPosition, int yPosition) {
+        return gameBoard[yPosition][xPosition].getTerrainType();
+    }
+
+    public int getLevelAtPosition(int xPosition, int yPosition) {
+        return gameBoard[yPosition][xPosition].getLevel();
+    }
+
+    public int getTileIDAtPosition(int xPosition, int yPosition) {
+        return gameBoard[yPosition][xPosition].getTileID();
     }
 }

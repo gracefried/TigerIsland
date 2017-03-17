@@ -13,8 +13,8 @@ public class TileTests {
 
         Tile tile = new Tile(volcano, grasslands, jungle);
 
-        Assert.assertEquals(volcano, tile.getTerrainTypeForPosition(HexagonPosition.TOP));
+        Assert.assertEquals(jungle, tile.getTerrainTypeForPosition(HexagonPosition.TOP));
         Assert.assertEquals(grasslands, tile.getTerrainTypeForPosition(HexagonPosition.RIGHT));
-        Assert.assertEquals(jungle, tile.getTerrainTypeForPosition(HexagonPosition.LEFT));
+        Assert.assertEquals(volcano, tile.getTerrainTypeForPosition(HexagonPosition.LEFT));
     }
 }
