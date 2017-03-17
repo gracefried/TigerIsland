@@ -3,7 +3,7 @@ public class Tile {
     private Hexagon rightHex;
     private Hexagon leftHex;
 
-    public Tile(TerrainType topType, TerrainType rightType, TerrainType leftType) {
+    public Tile(TerrainType leftType, TerrainType rightType, TerrainType topType) {
         topHex = new Hexagon(topType);
         rightHex = new Hexagon(rightType);
         leftHex = new Hexagon(leftType);

@@ -1,64 +1,69 @@
 public class Board {
-    /*
-    int[][][] gameBoard = new int[400][400][5];
-    //3rd dimension is Level, Terrain, TileID, Meeples (T/F), Valid Space (T/F)
-    private int tileID = 1;
+    Hexagon[][] gameBoard = new Hexagon[400][400];
+    private int nextTileID = 1;
 
     public Board() {
-        //Loop through gameBoard
-        //Checkerboards the gameBoard with valid (1) and not valid (0)
-        //Whole board is level 0
         for (int ii = 0; ii < 400; ii++) {
             for (int jj = 0; jj < 400; jj++) {
-                gameBoard[jj][jj][0] = 0;
+                gameBoard[ii][jj] = new Hexagon();
                 if (ii % 2 == 0 && jj % 2 == 0) {
-                    gameBoard[jj][jj][4] = 1;
-                } else if (ii % 2 == 1 && jj % 2 == 1){
-                    gameBoard[ii][jj][4] = 1;
+                    gameBoard[ii][jj].setSpaceAsValid(true);
+                } else if (ii % 2 == 1 && jj % 2 == 1) {
+                    gameBoard[ii][jj].setSpaceAsValid(true);
                 } else {
-                    gameBoard[ii][jj][4] = 0;
+                    gameBoard[ii][jj].setSpaceAsValid(false);
                 }
             }
         }
     }
 
-    //Anchor position of a tile is the upper left corner and tiles will be
-    //place starting from there
-    //Returns false for tile failed to place or true for tile does place
-    public boolean placeTile(int xPosition, int yPosition, Tile newTile) {
-        if (gameBoard[yPosition][xPosition][4] == 0) {
+    public boolean placeTile(Tile tileToPlace, int xPosition, int yPosition) {
+        if (!gameBoard[yPosition][xPosition].getSpaceIsValid()) {
             return false;
         } else {
-            //Raises the level of all the parts of the tile being placed
-            //Gives it a tileID
-            //No Meeples
+            /*
+                No rule enforcement here except for placing in a valid location
+             */
+
             for (int ii = yPosition; ii < yPosition+2; ii++) {
                 for (int jj = xPosition; jj < xPosition+3; jj++) {
-                    gameBoard[ii][jj][0] += 1;
-                    gameBoard[ii][jj][2] = this.tileID;
-                    gameBoard[ii][jj][3] = 0;
+                    gameBoard[ii][jj].setLevel(1);
+                    gameBoard[ii][jj].setTileID(nextTileID);
+                    gameBoard[ii][jj].setOccupied(false);
                 }
             }
-            //Next tileID will be 1 tile higher
-            this.tileID++;
+            this.nextTileID++;
 
-            //Adds the tile terrains for the two on top one on bottom tile orientation
-            gameBoard[yPosition][xPosition][1] = newTile.getTile1();
-            gameBoard[yPosition][xPosition+2][1] = newTile.getTile2();
-            gameBoard[yPosition+1][xPosition+1][1] = newTile.getTile3();
+            TerrainType left = tileToPlace.getTerrainTypeForPosition(HexagonPosition.LEFT);
+            TerrainType right = tileToPlace.getTerrainTypeForPosition(HexagonPosition.RIGHT);
+            TerrainType top = tileToPlace.getTerrainTypeForPosition(HexagonPosition.TOP);
+
+            gameBoard[yPosition][xPosition].setTerrainType(left);
+            gameBoard[yPosition][xPosition+2].setTerrainType(right);
+            gameBoard[yPosition+1][xPosition+1].setTerrainType(top);
             return true;
         }
     }
 
-    //Loops through board to print it
-    //1 is level, 2 is terrain, 3 is tileID, 4 is meeples on the tile, 5 is valid space
     public void printBoard() {
-        for (int ii = 190; ii < 210; ii++) {
-            for (int jj = 190; jj < 210; jj++) {
-                System.out.print(gameBoard[ii][jj][2]);
+        System.out.println("Terrain, TileID, Level");
+        for (int ii = 200; ii < 204; ii++) {
+            for (int jj = 200; jj < 210; jj++) {
+                System.out.print("(" + gameBoard[ii][jj].getTerrainType() + ", " + gameBoard[ii][jj].getTileID() + ", " + gameBoard[ii][jj].getLevel() + ")");
             }
             System.out.println();
         }
     }
-    */
+
+    public TerrainType getTerrainTypeAtPosition(int xPosition, int yPosition) {
+        return gameBoard[yPosition][xPosition].getTerrainType();
+    }
+
+    public int getLevelAtPosition(int xPosition, int yPosition) {
+        return gameBoard[yPosition][xPosition].getLevel();
+    }
+
+    public int getTileIDAtPosition(int xPosition, int yPosition) {
+        return gameBoard[yPosition][xPosition].getTileID();
+    }
 }
