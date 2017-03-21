@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by gonzalonunez on 3/16/17.
@@ -8,16 +9,9 @@ public class Game {
     private Board board;
     private ArrayList<Player> players;
 
-    public Game(Player... players) {
-        setUpPlayersFromArray(players);
+    public Game(Player... playersArray) {
+        players = new ArrayList<Player>(Arrays.asList(playersArray));
         board = new Board();
-    }
-
-    private void setUpPlayersFromArray(Player... playersArray) {
-        players = new ArrayList<Player>();
-        for (Player p : playersArray) {
-            players.add(p);
-        }
     }
 
     public void runGameLoop() {
