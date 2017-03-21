@@ -1,19 +1,27 @@
+import java.util.ArrayList;
+
 /**
  * Created by gonzalonunez on 3/16/17.
  */
 
 public class Game {
     private Board board;
-
-    private Player[] players;
+    private ArrayList<Player> players;
 
     public Game(Player... players) {
-        this.players = players;
+        setUpPlayersFromArray(players);
         board = new Board();
     }
 
+    private void setUpPlayersFromArray(Player... playersArray) {
+        players = new ArrayList<Player>();
+        for (Player p : playersArray) {
+            players.add(p);
+        }
+    }
+
     public void runGameLoop() {
-        while (players.length != 0) {
+        while (!players.isEmpty()) {
             int idx = 1;
             for (Player player : players) {
                 System.out.println("* Player " + idx + "'s turn:");
@@ -26,14 +34,23 @@ public class Game {
                 //TODO: Confirm that requested tile placement is valid
                 TileCoordinate tileCoordinate = actionPerformer.tileAction(tile, currentBoard);
 
-                //TODO: If valid, place tile at this coordinate
+                //TODO: If valid, place tile at this coordinate!
 
                 //TODO: Confirm that the desired build move is valid
-                currentBoard = board;
+                currentBoard = board; // meh
                 actionPerformer.buildAction(tile, currentBoard);
 
                 idx++;
             }
         }
+    }
+
+    // Should this be public? Right now it's public for testing purposes...
+    public void eliminatePlayer(Player player) {
+        players.remove(player);
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
     }
 }
