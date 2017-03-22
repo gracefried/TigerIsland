@@ -15,7 +15,7 @@ public class Game {
     }
 
     public void runGameLoop() {
-        while (isGameOver()) {
+        while (!isGameOver()) {
             for (Player player : players) {
                 int idx = players.indexOf(player) + 1;
                 System.out.println("* Player " + idx + "'s turn:");
