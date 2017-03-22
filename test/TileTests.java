@@ -19,7 +19,7 @@ public class TileTests {
     }
 
     @Test
-    public void testTopheavyTileClockwiseRotation() {
+    public void testTileClockwiseRotation() {
         TerrainType volcano = TerrainType.VOLCANO;
         TerrainType grasslands = TerrainType.GRASSLANDS;
         TerrainType jungle = TerrainType.JUNGLE;
@@ -31,10 +31,16 @@ public class TileTests {
         Assert.assertEquals(volcano, tile.getTerrainTypeForPosition(HexagonPosition.MIDDLE));
         Assert.assertEquals(grasslands, tile.getTerrainTypeForPosition(HexagonPosition.RIGHT));
         Assert.assertEquals(jungle, tile.getTerrainTypeForPosition(HexagonPosition.LEFT));
+
+        tile.clockwiseRotation();
+
+        Assert.assertEquals(grasslands, tile.getTerrainTypeForPosition(HexagonPosition.MIDDLE));
+        Assert.assertEquals(volcano, tile.getTerrainTypeForPosition(HexagonPosition.RIGHT));
+        Assert.assertEquals(jungle, tile.getTerrainTypeForPosition(HexagonPosition.LEFT));
     }
 
     @Test
-    public void testTopheavyTileCounterClockwiseRotation() {
+    public void testTileCounterClockwiseRotation() {
         TerrainType volcano = TerrainType.VOLCANO;
         TerrainType grasslands = TerrainType.GRASSLANDS;
         TerrainType jungle = TerrainType.JUNGLE;
@@ -46,5 +52,11 @@ public class TileTests {
         Assert.assertEquals(grasslands, tile.getTerrainTypeForPosition(HexagonPosition.MIDDLE));
         Assert.assertEquals(jungle, tile.getTerrainTypeForPosition(HexagonPosition.RIGHT));
         Assert.assertEquals(volcano, tile.getTerrainTypeForPosition(HexagonPosition.LEFT));
+
+        tile.counterClockwiseRotation();
+
+        Assert.assertEquals(volcano, tile.getTerrainTypeForPosition(HexagonPosition.MIDDLE));
+        Assert.assertEquals(jungle, tile.getTerrainTypeForPosition(HexagonPosition.RIGHT));
+        Assert.assertEquals(grasslands, tile.getTerrainTypeForPosition(HexagonPosition.LEFT));
     }
 }

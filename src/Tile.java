@@ -29,12 +29,14 @@ public class Tile {
             Hexagon toBeMiddleHex = leftHex;
             leftHex = middleHex;
             middleHex = toBeMiddleHex;
+            tileOrientation = TileOrientation.BOTTOMHEAVY;
         }
         //swap swap M and R hexagons
         else if(tileOrientation == TileOrientation.BOTTOMHEAVY) {
             Hexagon toBeMiddleHex = rightHex;
             rightHex = middleHex;
             middleHex = toBeMiddleHex;
+            tileOrientation = TileOrientation.TOPHEAVY;
         }
     }
 
@@ -44,12 +46,14 @@ public class Tile {
             Hexagon toBeMiddleHex = rightHex;
             rightHex = middleHex;
             middleHex = toBeMiddleHex;
+            tileOrientation = TileOrientation.BOTTOMHEAVY;
         }
         //swap L and M hexagons
         else if(tileOrientation == TileOrientation.BOTTOMHEAVY) {
             Hexagon toBeMiddleHex = leftHex;
             leftHex = middleHex;
             middleHex = toBeMiddleHex;
+            tileOrientation = TileOrientation.TOPHEAVY;
         }
     }
 }
