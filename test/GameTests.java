@@ -8,11 +8,13 @@ public class GameTests {
     class MockActionPerformer implements GameActionPerformer {
         public MockActionPerformer() {}
 
-        public TileCoordinate tileAction(Tile tile, Board board) {
-            return new TileCoordinate(0, 0);
+        public Coordinate tileAction(Tile tile, Board board) {
+            return new Coordinate(0, 0);
         }
 
-        public void buildAction(Tile tile, Board board) {}
+        public BuildAction buildAction(Board board) {
+            return new CreateSettlementAction();
+        }
     }
 
     @Test

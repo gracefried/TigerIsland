@@ -15,9 +15,9 @@ public class Game {
     }
 
     public void runGameLoop() {
-        while (!players.isEmpty()) {
-            int idx = 1;
+        while (isGameOver()) {
             for (Player player : players) {
+                int idx = players.indexOf(player) + 1;
                 System.out.println("* Player " + idx + "'s turn:");
 
                 GameActionPerformer actionPerformer = player.getGameActionPerformer();
@@ -26,17 +26,24 @@ public class Game {
                 Tile tile = new Tile(TerrainType.JUNGLE, TerrainType.GRASSLANDS, TerrainType.VOLCANO); //TODO: draw tile instead
 
                 //TODO: Confirm that requested tile placement is valid
-                TileCoordinate tileCoordinate = actionPerformer.tileAction(tile, currentBoard);
+                Coordinate tileCoordinate = actionPerformer.tileAction(tile, currentBoard);
 
-                //TODO: If valid, place tile at this coordinate!
+                //TODO: If valid, place tile at this coordinate! Modify the board!
 
                 //TODO: Confirm that the desired build move is valid
                 currentBoard = board; // meh
-                actionPerformer.buildAction(tile, currentBoard);
+                BuildAction buildAction = actionPerformer.buildAction(currentBoard);
+
+                //TODO: Is this all we need to perform the action? Does this modify the board?
+                buildAction.perform(board);
 
                 idx++;
             }
         }
+    }
+
+    private boolean isGameOver() {
+        return players.isEmpty();
     }
 
     // Should this be public? Right now it's public for testing purposes...

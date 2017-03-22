@@ -14,7 +14,7 @@ public class UserInteractor implements GameActionPerformer {
         scanner.close();
     }
 
-    public TileCoordinate tileAction(Tile tile, Board board) {
+    public Coordinate tileAction(Tile tile, Board board) {
         //TODO: Display the tile and the current board to the user. Maybe we want to show valid spots with numbers on them?
 
         System.out.println("Where would you like to place your tile?");
@@ -22,7 +22,7 @@ public class UserInteractor implements GameActionPerformer {
         int x = getXCoordinate();
         int y = getYCoordinate();
 
-        return new TileCoordinate(x, y);
+        return new Coordinate(x, y);
     }
 
     private int getXCoordinate() {
@@ -46,7 +46,8 @@ public class UserInteractor implements GameActionPerformer {
         }
     }
 
-    public void buildAction(Tile tile, Board board) {
+    public BuildAction buildAction(Board board) {
         //TODO: Build action(s)...
+        return new CreateSettlementAction();
     }
 }
