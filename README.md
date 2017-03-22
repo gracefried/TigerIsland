@@ -6,7 +6,7 @@ CEN3031 Team Q's Project
 2. `git fetch upstream` // Fetch the team's repo
 3. `git rebase upstream/master` // Rebase the team's changes (you want to keep all the current history!)
 4. `git branch -l "myBranchName"` // Create a new local branch for the changes you want to make
-5. `git checkout branch myBranchName` // Get on your newly created branch
+5. `git checkout myBranchName` // Get on your newly created branch
 6. Make some changes...
 7. `git add .` // Add the changes. The . is just a file path, this add's the current directory
 8. `git commit -m "I made some changes"` // Commit the changes. Leave a descriptive message.
