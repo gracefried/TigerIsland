@@ -14,6 +14,7 @@ public class Game {
         board = new Board();
     }
 
+    //TODO: Let's make this method a little smaller!
     public void runGameLoop() {
         while (!isGameOver()) {
             for (Player player : players) {
@@ -36,8 +37,6 @@ public class Game {
 
                 //TODO: Is this all we need to perform the action? Does this modify the board?
                 buildAction.perform(board);
-
-                idx++;
             }
         }
     }

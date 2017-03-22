@@ -11,5 +11,7 @@ public class TigerIsland {
 
         Game game = new Game(firstPlayer, secondPlayer);
         game.runGameLoop();
+
+        sharedInteractor.close();
     }
 }
