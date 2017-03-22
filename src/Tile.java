@@ -2,13 +2,13 @@ public class Tile {
     private Hexagon middleHex;
     private Hexagon rightHex;
     private Hexagon leftHex;
-    private TileOrientationType tileOrientation;
+    private TileOrientation tileOrientation;
 
     public Tile(TerrainType leftType, TerrainType rightType, TerrainType middleType) {
         middleHex = new Hexagon(middleType);
         rightHex = new Hexagon(rightType);
         leftHex = new Hexagon(leftType);
-        tileOrientation = TileOrientationType.TOPHEAVY;
+        tileOrientation = TileOrientation.TOPHEAVY;
     }
 
     public TerrainType getTerrainTypeForPosition(HexagonPosition position) {
@@ -23,15 +23,15 @@ public class Tile {
         return null;
     }
 
-    public void clockiseRotation() {
+    public void clockwiseRotation() {
         //swap L and M hexagons
-        if(tileOrientation == TileOrientationType.TOPHEAVY) {
+        if(tileOrientation == TileOrientation.TOPHEAVY) {
             Hexagon toBeMiddleHex = leftHex;
             leftHex = middleHex;
             middleHex = toBeMiddleHex;
         }
         //swap swap M and R hexagons
-        else if(tileOrientation == TileOrientationType.BOTTOMHEAVY) {
+        else if(tileOrientation == TileOrientation.BOTTOMHEAVY) {
             Hexagon toBeMiddleHex = rightHex;
             rightHex = middleHex;
             middleHex = toBeMiddleHex;
@@ -40,13 +40,13 @@ public class Tile {
 
     public void counterClockwiseRotation() {
         //swap M and R hexagons
-        if(tileOrientation == TileOrientationType.TOPHEAVY) {
+        if(tileOrientation == TileOrientation.TOPHEAVY) {
             Hexagon toBeMiddleHex = rightHex;
             rightHex = middleHex;
             middleHex = toBeMiddleHex;
         }
         //swap L and M hexagons
-        else if(tileOrientation == TileOrientationType.BOTTOMHEAVY) {
+        else if(tileOrientation == TileOrientation.BOTTOMHEAVY) {
             Hexagon toBeMiddleHex = leftHex;
             leftHex = middleHex;
             middleHex = toBeMiddleHex;
