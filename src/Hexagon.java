@@ -5,6 +5,7 @@ public class Hexagon {
     private TerrainType terrainType;
     private int tileID;
     private int level;
+    private int numVillagersOnTop;
     private boolean occupied;
     private boolean validSpace;
 
@@ -12,6 +13,7 @@ public class Hexagon {
         this.terrainType = TerrainType.EMPTY;
         this.tileID = 0;
         this.level = 0;
+        this.numVillagersOnTop = 0;
         this.occupied = false;
         this.validSpace = false;
     }
@@ -59,4 +61,8 @@ public class Hexagon {
     public void setOccupied(boolean occupied) {
         this.occupied = occupied;
     }
+
+    public void setVillagersOnTop(int numOfVillagers){ numVillagersOnTop = numOfVillagers; }
+
+    public int getNumVillagersOnTop() { return this.numVillagersOnTop; }
 }
