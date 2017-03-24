@@ -26,17 +26,17 @@ public class TileTests {
 
         Tile tile = new Tile(volcano, grasslands, jungle);
 
-        tile.clockwiseRotation();
+        tile.clockwiseRotation(); //topHeavy Tile rotating clockwise
 
-        Assert.assertEquals(volcano, tile.getTerrainTypeForPosition(HexagonPosition.MIDDLE));
+        Assert.assertEquals(jungle, tile.getTerrainTypeForPosition(HexagonPosition.LEFT));
         Assert.assertEquals(grasslands, tile.getTerrainTypeForPosition(HexagonPosition.RIGHT));
+        Assert.assertEquals(volcano, tile.getTerrainTypeForPosition(HexagonPosition.MIDDLE));
+
+        tile.clockwiseRotation(); //bottomHeavy Tile rotating clockwise
+
         Assert.assertEquals(jungle, tile.getTerrainTypeForPosition(HexagonPosition.LEFT));
-
-        tile.clockwiseRotation();
-
-        Assert.assertEquals(grasslands, tile.getTerrainTypeForPosition(HexagonPosition.MIDDLE));
         Assert.assertEquals(volcano, tile.getTerrainTypeForPosition(HexagonPosition.RIGHT));
-        Assert.assertEquals(jungle, tile.getTerrainTypeForPosition(HexagonPosition.LEFT));
+        Assert.assertEquals(grasslands, tile.getTerrainTypeForPosition(HexagonPosition.MIDDLE));
     }
 
     @Test
@@ -47,16 +47,16 @@ public class TileTests {
 
         Tile tile = new Tile(volcano, grasslands, jungle);
 
-        tile.counterClockwiseRotation();
+        tile.counterClockwiseRotation(); //topHeavy Tile rotating counter-clockwise
 
-        Assert.assertEquals(grasslands, tile.getTerrainTypeForPosition(HexagonPosition.MIDDLE));
-        Assert.assertEquals(jungle, tile.getTerrainTypeForPosition(HexagonPosition.RIGHT));
         Assert.assertEquals(volcano, tile.getTerrainTypeForPosition(HexagonPosition.LEFT));
-
-        tile.counterClockwiseRotation();
-
-        Assert.assertEquals(volcano, tile.getTerrainTypeForPosition(HexagonPosition.MIDDLE));
         Assert.assertEquals(jungle, tile.getTerrainTypeForPosition(HexagonPosition.RIGHT));
+        Assert.assertEquals(grasslands, tile.getTerrainTypeForPosition(HexagonPosition.MIDDLE));
+
+        tile.counterClockwiseRotation(); //bottomHeavy Tile rotating counter-clockwise
+
         Assert.assertEquals(grasslands, tile.getTerrainTypeForPosition(HexagonPosition.LEFT));
+        Assert.assertEquals(jungle, tile.getTerrainTypeForPosition(HexagonPosition.RIGHT));
+        Assert.assertEquals(volcano, tile.getTerrainTypeForPosition(HexagonPosition.MIDDLE));
     }
 }
