@@ -48,12 +48,15 @@ public class CreateSettlementSteps {
 
     @Then("^The location receives 1 villager$")
     public void locationReceivesVillager(){
-        // TODO: Set the number of villagers on the x, y hex equal to 1
+        gameBoard.setVillagersAtPosition(1, 200, 200);
     }
 
     @And("^The player removes 1 villager from their inventory$")
     public void playerRemovesVillagerFromInventory(){
-        // TODO: daveExtraLarge.numVillagers--;
+        int numVillagersBefore = daveXtraLarge.getNumberOfVillagers();
+        daveXtraLarge.removeVillagerFromInventory(1);
+        int numVillagersAfter = daveXtraLarge.getNumberOfVillagers();
+        Assert.assertNotEquals(numVillagersBefore, numVillagersAfter);
     }
 
 }

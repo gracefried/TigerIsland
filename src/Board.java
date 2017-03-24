@@ -66,4 +66,10 @@ public class Board {
     public int getTileIDAtPosition(int xPosition, int yPosition) {
         return gameBoard[yPosition][xPosition].getTileID();
     }
+
+    public void setVillagersAtPosition(int numOfVillagers, int xPosition, int yPosition){
+        gameBoard[yPosition][xPosition].setVillagersOnTop(numOfVillagers);
+    }
+
+    public int getVillagerNumberAtPosition(int xPosition, int yPosition) { return gameBoard[yPosition][xPosition].getNumVillagersOnTop(); }
 }
