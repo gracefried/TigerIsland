@@ -8,7 +8,7 @@ import cucumber.api.CucumberOptions;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = {"AcceptanceTests"}
+        features = {"test"}
 )
 public class CukesRunner {
 }
