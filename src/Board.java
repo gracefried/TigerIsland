@@ -36,11 +36,11 @@ public class Board {
 
             TerrainType left = tileToPlace.getTerrainTypeForPosition(HexagonPosition.LEFT);
             TerrainType right = tileToPlace.getTerrainTypeForPosition(HexagonPosition.RIGHT);
-            TerrainType top = tileToPlace.getTerrainTypeForPosition(HexagonPosition.TOP);
+            TerrainType middle = tileToPlace.getTerrainTypeForPosition(HexagonPosition.MIDDLE);
 
             gameBoard[yPosition][xPosition].setTerrainType(left);
             gameBoard[yPosition][xPosition+2].setTerrainType(right);
-            gameBoard[yPosition+1][xPosition+1].setTerrainType(top);
+            gameBoard[yPosition+1][xPosition+1].setTerrainType(middle);
             return true;
         }
     }
