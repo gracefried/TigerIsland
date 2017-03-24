@@ -23,4 +23,11 @@ public class Player {
         return gameActionPerformer;
     }
 
+    public int getNumberOfVillagers(){
+        return numberOfVillagers;
+    }
+
+    public void removeVillagerFromInventory(int numToRemove){
+        numberOfVillagers -= numToRemove;
+    }
 }
