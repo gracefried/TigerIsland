@@ -1,9 +1,6 @@
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * Created by taylo on 3/16/2017.
- */
 public class BoardTests {
     @Test
     public void createBoardAndPlaceTile() {

@@ -3,12 +3,14 @@ public class Tile {
     private Hexagon rightHex;
     private Hexagon leftHex;
     private TileOrientation tileOrientation;
+    private HexagonPosition anchor;
 
     public Tile(TerrainType leftType, TerrainType rightType, TerrainType middleType) {
         middleHex = new Hexagon(middleType);
         rightHex = new Hexagon(rightType);
         leftHex = new Hexagon(leftType);
         tileOrientation = TileOrientation.TOPHEAVY;
+        anchor = HexagonPosition.MIDDLE;    //Used to determine valid placement of tile
     }
 
     public TerrainType getTerrainTypeForPosition(HexagonPosition position) {
@@ -51,4 +53,17 @@ public class Tile {
             tileOrientation = TileOrientation.TOPHEAVY;
         }
     }
+
+    public void changeAnchorPosition(HexagonPosition newAnchor) {
+        this.anchor = newAnchor;
+    }
+
+    public HexagonPosition getAnchorPosition() {
+        return this.anchor;
+    }
+
+    public TileOrientation getOrientation() {
+        return this.tileOrientation;
+    }
+
 }
