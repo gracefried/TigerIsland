@@ -2,9 +2,7 @@ import javax.swing.*;
 
 public class Player {
     private GameActionPerformer gameActionPerformer;
-    private int numberOfVillagers;
-    private int numberOfTotoros;
-    private int numberOfTigers;
+    private Inventory inventory;
 
     // The tile the player has just drawn
     // Currently set to public for testing purposes
@@ -12,22 +10,22 @@ public class Player {
     Tile tileInHand;
 
     public Player(GameActionPerformer actionPerformer) {
+        inventory = new Inventory();
         gameActionPerformer = actionPerformer;
-        numberOfVillagers = 20;
-        numberOfTotoros = 3;
-        numberOfTigers = 2;
+
         tileInHand = null;
     }
 
     public GameActionPerformer getGameActionPerformer() {
         return gameActionPerformer;
     }
+    public int getMeepleSize(){return inventory.getMeepleSize();}
+    public int getTigerSize(){return inventory.getTigerSize();}
+    public int getTotoroSize(){return inventory.getTotoroSize();}
+    public void placeMeeplePiece(){inventory.removeMeeplePiece();}
+    public void placeTigerPiece(){inventory.removeTigerPiece();}
+    public void placeTotoroPiece(){inventory.removeTotoroPiece();}
 
-    public int getNumberOfVillagers(){
-        return numberOfVillagers;
-    }
 
-    public void removeVillagerFromInventory(int numToRemove){
-        numberOfVillagers -= numToRemove;
-    }
+
 }
