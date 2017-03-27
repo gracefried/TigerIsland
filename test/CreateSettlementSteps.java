@@ -53,9 +53,9 @@ public class CreateSettlementSteps {
 
     @And("^The player removes 1 villager from their inventory$")
     public void playerRemovesVillagerFromInventory(){
-        int numVillagersBefore = daveXtraLarge.getNumberOfVillagers();
-        daveXtraLarge.removeVillagerFromInventory(1);
-        int numVillagersAfter = daveXtraLarge.getNumberOfVillagers();
+        int numVillagersBefore = daveXtraLarge.getMeepleSize();
+        daveXtraLarge.placeMeeplePiece();
+        int numVillagersAfter = daveXtraLarge.getMeepleSize();
         Assert.assertNotEquals(numVillagersBefore, numVillagersAfter);
     }
 
