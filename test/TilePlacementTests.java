@@ -1,11 +1,13 @@
 import org.junit.Assert;
 import org.junit.Test;
-import java.util.ArrayList;
+
+import java.util.*;
+import java.awt.*;
 
 
 public class TilePlacementTests {
     @Test
-    public void testFirstTileHasOneValidCoordinate() {
+    public void testFirstTileHasOneValidPoint() {
         Board gameBoard = new Board();
         TerrainType volcano = TerrainType.VOLCANO;
         TerrainType grasslands = TerrainType.GRASSLANDS;
@@ -13,13 +15,47 @@ public class TilePlacementTests {
 
         Tile tile1 = new Tile(volcano, grasslands, jungle);
 
-        //Gets valid tile position of tile1 (first tile)
-        ArrayList<Coordinate> returnedValidCoordinates = gameBoard.determineValidPositionsForNewTile(tile1);
-        Assert.assertEquals(1, returnedValidCoordinates.size());
+        HashMap<Point, Boolean> returnedValidPoints = gameBoard.validPositionsForNewTile(tile1);
+        Assert.assertEquals(1, returnedValidPoints.size());
+        Assert.assertEquals(new Point(200, 200), returnedValidPoints.keySet().toArray()[0]);
     }
 
     @Test
-    public void testSecondTileValidCoordinatesTopHeavyWithTopHeavyMiddleAnchor() {
+    public void testSecondTileValidPointsTopHeavyWithTopHeavyMiddleAnchor() {
+        Board gameBoard = new Board();
+
+        TerrainType volcano = TerrainType.VOLCANO;
+        TerrainType grasslands = TerrainType.GRASSLANDS;
+        TerrainType rocky = TerrainType.ROCKY;
+        TerrainType jungle = TerrainType.JUNGLE;
+
+        Tile tile1 = new Tile(volcano, grasslands, jungle);
+        Tile tile2 = new Tile(grasslands, volcano, rocky);
+
+        gameBoard.placeTile(tile1, new Point(200, 200));
+
+        HashMap<Point, Boolean> returnedValidPoints2 = gameBoard.validPositionsForNewTile(tile2);
+
+        Point expectedValidPoints[] = {new Point(199, 199),
+                new Point(201, 199),
+                new Point(203, 199),
+                new Point(198, 200),
+                new Point(204, 200),
+                new Point(198, 202),
+                new Point(204, 202),
+                new Point(199, 203),
+                new Point(201, 203),
+                new Point(203, 203)};
+
+        Set<Point> points = returnedValidPoints2.keySet();
+        for (Point expected : expectedValidPoints) {
+            Assert.assertTrue(points.contains(expected));
+        }
+    }
+
+
+    @Test
+    public void testSecondTileValidPointsTopHeavyWithTopHeavyRightAnchor() {
         Board gameBoard = new Board();
         TerrainType volcano = TerrainType.VOLCANO;
         TerrainType grasslands = TerrainType.GRASSLANDS;
@@ -29,26 +65,31 @@ public class TilePlacementTests {
         Tile tile1 = new Tile(volcano, grasslands, jungle);
         Tile tile2 = new Tile(grasslands, volcano, rocky);
 
-        ArrayList<Coordinate> returnedValidCoordinates = gameBoard.determineValidPositionsForNewTile(tile1);
-        gameBoard.placeTile(tile1, returnedValidCoordinates.get(0).getX(), returnedValidCoordinates.get(0).getY());
+        gameBoard.placeTile(tile1, new Point(200, 200));
 
-        tile2.changeAnchorPosition(HexagonPosition.MIDDLE); //Make anchor position middle
+        tile2.changeAnchorPosition(HexagonPosition.RIGHT);
 
-        //Gets valid tile positions of tile2 (second tile)
-        ArrayList<Coordinate> returnedValidCoordinates2 = gameBoard.determineValidPositionsForNewTile(tile2);
+        HashMap<Point, Boolean> returnedValidPoints2 = gameBoard.validPositionsForNewTile(tile2);
 
-        //(x,y)
-        int expectedValidCoordinates[][] = { {199, 199}, {201, 199}, {203, 199}, {198, 200}, {204, 200},
-                                             {198, 202}, {204, 202}, {199, 203}, {201, 203}, {203, 203} };
+        Point expectedValidPoints[] = {new Point(200, 198),
+                new Point(202, 198),
+                new Point(204, 198),
+                new Point(199, 199),
+                new Point(205, 199),
+                new Point(199, 201),
+                new Point(205, 201),
+                new Point(200, 202),
+                new Point(202, 202),
+                new Point(204, 202)};
 
-        for (int ii = 0; ii < returnedValidCoordinates2.size(); ii++) {
-            Assert.assertEquals(expectedValidCoordinates[ii][0], returnedValidCoordinates2.get(ii).getX());
-            Assert.assertEquals(expectedValidCoordinates[ii][1], returnedValidCoordinates2.get(ii).getY());
+        Set<Point> points = returnedValidPoints2.keySet();
+        for (Point expected : expectedValidPoints) {
+            Assert.assertTrue(points.contains(expected));
         }
     }
 
     @Test
-    public void testSecondTileValidCoordinatesTopHeavyWithTopHeavyRightAnchor() {
+    public void testSecondTileValidPointsTopHeavyWithTopHeavyLeftAnchor() {
         Board gameBoard = new Board();
         TerrainType volcano = TerrainType.VOLCANO;
         TerrainType grasslands = TerrainType.GRASSLANDS;
@@ -58,26 +99,31 @@ public class TilePlacementTests {
         Tile tile1 = new Tile(volcano, grasslands, jungle);
         Tile tile2 = new Tile(grasslands, volcano, rocky);
 
-        ArrayList<Coordinate> returnedValidCoordinates = gameBoard.determineValidPositionsForNewTile(tile1);
-        gameBoard.placeTile(tile1, returnedValidCoordinates.get(0).getX(), returnedValidCoordinates.get(0).getY());
+        gameBoard.placeTile(tile1, new Point(200, 200));
 
-        tile2.changeAnchorPosition(HexagonPosition.RIGHT); //Make anchor position right
+        tile2.changeAnchorPosition(HexagonPosition.LEFT);
 
-        //Gets valid tile positions of tile2 (second tile)
-        ArrayList<Coordinate> returnedValidCoordinates2 = gameBoard.determineValidPositionsForNewTile(tile2);
+        HashMap<Point, Boolean> returnedValidPoints2 = gameBoard.validPositionsForNewTile(tile2);
 
-        //(x,y)
-        int expectedValidCoordinates[][] = { {200, 198}, {202, 198}, {204, 198}, {199, 199}, {205, 199},
-                                             {199, 201}, {205, 201}, {200, 202}, {202, 202}, {204, 202} };
+        Point expectedValidPoints[] = {new Point(198, 198),
+                new Point(200, 198),
+                new Point(202, 198),
+                new Point(197, 199),
+                new Point(203, 199),
+                new Point(197, 201),
+                new Point(203, 201),
+                new Point(198, 202),
+                new Point(200, 202),
+                new Point(202, 202)};
 
-        for (int ii = 0; ii < returnedValidCoordinates2.size(); ii++) {
-            Assert.assertEquals(expectedValidCoordinates[ii][0], returnedValidCoordinates2.get(ii).getX());
-            Assert.assertEquals(expectedValidCoordinates[ii][1], returnedValidCoordinates2.get(ii).getY());
+        Set<Point> points = returnedValidPoints2.keySet();
+        for (Point expected : expectedValidPoints) {
+            Assert.assertTrue(points.contains(expected));
         }
     }
 
     @Test
-    public void testSecondTileValidCoordinatesTopHeavyWithTopHeavyLeftAnchor() {
+    public void testSecondTileValidPointsBottomHeavyWithTopHeavyMiddleAnchor() {
         Board gameBoard = new Board();
         TerrainType volcano = TerrainType.VOLCANO;
         TerrainType grasslands = TerrainType.GRASSLANDS;
@@ -87,26 +133,30 @@ public class TilePlacementTests {
         Tile tile1 = new Tile(volcano, grasslands, jungle);
         Tile tile2 = new Tile(grasslands, volcano, rocky);
 
-        ArrayList<Coordinate> returnedValidCoordinates = gameBoard.determineValidPositionsForNewTile(tile1);
-        gameBoard.placeTile(tile1, returnedValidCoordinates.get(0).getX(), returnedValidCoordinates.get(0).getY());
+        gameBoard.placeTile(tile1, new Point(200, 200));
 
-        tile2.changeAnchorPosition(HexagonPosition.LEFT); //Make anchor position left
+        tile2.changeOrientation();
+        tile2.changeAnchorPosition(HexagonPosition.MIDDLE);
 
-        //Gets valid tile positions of tile2 (second tile)
-        ArrayList<Coordinate> returnedValidCoordinates2 = gameBoard.determineValidPositionsForNewTile(tile2);
+        HashMap<Point, Boolean> returnedValidPoints2 = gameBoard.validPositionsForNewTile(tile2);
 
-        //(x,y)
-        int expectedValidCoordinates[][] = { {198, 198}, {200, 198}, {202, 198}, {197, 199}, {203, 199},
-                                             {197, 201}, {203, 201}, {198, 202}, {200, 202}, {202, 202} };
+        Point expectedValidPoints[] = {new Point(198, 198),
+                new Point(200, 198),
+                new Point(202, 198),
+                new Point(204, 198),
+                new Point(198, 200),
+                new Point(204, 200),
+                new Point(200, 202),
+                new Point(202, 202)};
 
-        for (int ii = 0; ii < returnedValidCoordinates2.size(); ii++) {
-            Assert.assertEquals(expectedValidCoordinates[ii][0], returnedValidCoordinates2.get(ii).getX());
-            Assert.assertEquals(expectedValidCoordinates[ii][1], returnedValidCoordinates2.get(ii).getY());
+        Set<Point> points = returnedValidPoints2.keySet();
+        for (Point expected : expectedValidPoints) {
+            Assert.assertTrue(points.contains(expected));
         }
     }
 
     @Test
-    public void testSecondTileValidCoordinatesBottomHeavyWithTopHeavyMiddleAnchor() {
+    public void testSecondTileValidPointsBottomHeavyWithTopHeavyRightAnchor() {
         Board gameBoard = new Board();
         TerrainType volcano = TerrainType.VOLCANO;
         TerrainType grasslands = TerrainType.GRASSLANDS;
@@ -116,27 +166,30 @@ public class TilePlacementTests {
         Tile tile1 = new Tile(volcano, grasslands, jungle);
         Tile tile2 = new Tile(grasslands, volcano, rocky);
 
-        ArrayList<Coordinate> returnedValidCoordinates = gameBoard.determineValidPositionsForNewTile(tile1);
-        gameBoard.placeTile(tile1, returnedValidCoordinates.get(0).getX(), returnedValidCoordinates.get(0).getY());
+        gameBoard.placeTile(tile1, new Point(200, 200));
 
-        tile2.changeOrientation();  //Make tile2 bottomheavy
-        tile2.changeAnchorPosition(HexagonPosition.MIDDLE); //Make anchor position middle
+        tile2.changeOrientation();
+        tile2.changeAnchorPosition(HexagonPosition.RIGHT);
 
-        //Gets valid tile positions of tile2 (second tile)
-        ArrayList<Coordinate> returnedValidCoordinates2 = gameBoard.determineValidPositionsForNewTile(tile2);
+        HashMap<Point, Boolean> returnedValidPoints2 = gameBoard.validPositionsForNewTile(tile2);
 
-        //(x,y)
-        int expectedValidCoordinates[][] = { {198, 198}, {200, 198}, {202, 198}, {204, 198},
-                                             {198, 200}, {204, 200}, {200, 202}, {202, 202} };
+        Point expectedValidPoints[] = {new Point(199, 199),
+                new Point(201, 199),
+                new Point(203, 199),
+                new Point(205, 199),
+                new Point(199, 201),
+                new Point(205, 201),
+                new Point(201, 203),
+                new Point(203, 203)};
 
-        for (int ii = 0; ii < returnedValidCoordinates2.size(); ii++) {
-            Assert.assertEquals(expectedValidCoordinates[ii][0], returnedValidCoordinates2.get(ii).getX());
-            Assert.assertEquals(expectedValidCoordinates[ii][1], returnedValidCoordinates2.get(ii).getY());
+        Set<Point> points = returnedValidPoints2.keySet();
+        for (Point expected : expectedValidPoints) {
+            Assert.assertTrue(points.contains(expected));
         }
     }
 
     @Test
-    public void testSecondTileValidCoordinatesBottomHeavyWithTopHeavyRightAnchor() {
+    public void testSecondTileValidPointsBottomHeavyWithTopHeavyLeftAnchor() {
         Board gameBoard = new Board();
         TerrainType volcano = TerrainType.VOLCANO;
         TerrainType grasslands = TerrainType.GRASSLANDS;
@@ -146,52 +199,25 @@ public class TilePlacementTests {
         Tile tile1 = new Tile(volcano, grasslands, jungle);
         Tile tile2 = new Tile(grasslands, volcano, rocky);
 
-        ArrayList<Coordinate> returnedValidCoordinates = gameBoard.determineValidPositionsForNewTile(tile1);
-        gameBoard.placeTile(tile1, returnedValidCoordinates.get(0).getX(), returnedValidCoordinates.get(0).getY());
+        gameBoard.placeTile(tile1, new Point(200, 200));
 
-        tile2.changeOrientation();  //Make tile2 bottomheavy
-        tile2.changeAnchorPosition(HexagonPosition.RIGHT); //Make anchor position right
+        tile2.changeOrientation();
+        tile2.changeAnchorPosition(HexagonPosition.LEFT);
 
-        //Gets valid tile positions of tile2 (second tile)
-        ArrayList<Coordinate> returnedValidCoordinates2 = gameBoard.determineValidPositionsForNewTile(tile2);
+        HashMap<Point, Boolean> returnedValidPoints2 = gameBoard.validPositionsForNewTile(tile2);
 
-        //(x,y)
-        int expectedValidCoordinates[][] = { {199, 199}, {201, 199}, {203, 199}, {205, 199},
-                                             {199, 201}, {205, 201}, {201, 203}, {203, 203} };
+        Point expectedValidPoints[] = {new Point(197, 199),
+                new Point(199, 199),
+                new Point(201, 199),
+                new Point(203, 199),
+                new Point(197, 201),
+                new Point(203, 201),
+                new Point(199, 203),
+                new Point(201, 203)};
 
-        for (int ii = 0; ii < returnedValidCoordinates2.size(); ii++) {
-            Assert.assertEquals(expectedValidCoordinates[ii][0], returnedValidCoordinates2.get(ii).getX());
-            Assert.assertEquals(expectedValidCoordinates[ii][1], returnedValidCoordinates2.get(ii).getY());
-        }
-    }
-
-    @Test
-    public void testSecondTileValidCoordinatesBottomHeavyWithTopHeavyLeftAnchor() {
-        Board gameBoard = new Board();
-        TerrainType volcano = TerrainType.VOLCANO;
-        TerrainType grasslands = TerrainType.GRASSLANDS;
-        TerrainType rocky = TerrainType.ROCKY;
-        TerrainType jungle = TerrainType.JUNGLE;
-
-        Tile tile1 = new Tile(volcano, grasslands, jungle);
-        Tile tile2 = new Tile(grasslands, volcano, rocky);
-
-        ArrayList<Coordinate> returnedValidCoordinates = gameBoard.determineValidPositionsForNewTile(tile1);
-        gameBoard.placeTile(tile1, returnedValidCoordinates.get(0).getX(), returnedValidCoordinates.get(0).getY());
-
-        tile2.changeOrientation();  //Make tile2 bottomheavy
-        tile2.changeAnchorPosition(HexagonPosition.LEFT); //Make anchor position left
-
-        //Gets valid tile positions of tile2 (second tile)
-        ArrayList<Coordinate> returnedValidCoordinates2 = gameBoard.determineValidPositionsForNewTile(tile2);
-
-        //(x,y)
-        int expectedValidCoordinates[][] = { {197, 199}, {199, 199}, {201, 199}, {203, 199},
-                                             {197, 201}, {203, 201}, {199, 203}, {201, 203} };
-
-        for (int ii = 0; ii < returnedValidCoordinates2.size(); ii++) {
-            Assert.assertEquals(expectedValidCoordinates[ii][0], returnedValidCoordinates2.get(ii).getX());
-            Assert.assertEquals(expectedValidCoordinates[ii][1], returnedValidCoordinates2.get(ii).getY());
+        Set<Point> points = returnedValidPoints2.keySet();
+        for (Point expected : expectedValidPoints) {
+            Assert.assertTrue(points.contains(expected));
         }
     }
 }

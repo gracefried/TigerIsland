@@ -1,6 +1,9 @@
+import cucumber.deps.com.thoughtworks.xstream.mapper.Mapper;
+
 /**
  * Created by gonzalonunez on 3/16/17.
  */
+
 public class Hexagon {
     private TerrainType terrainType;
     private int tileID;
@@ -16,6 +19,16 @@ public class Hexagon {
         this.numVillagersOnTop = 0;
         this.occupied = false;
         this.validSpace = false;
+    }
+
+    public Hexagon(Hexagon hex) {
+        if (hex == null) { return; }
+        this.terrainType = hex.terrainType;
+        this.tileID = hex.tileID;
+        this.level = hex.level;
+        this.numVillagersOnTop = hex.numVillagersOnTop;
+        this.occupied = hex.occupied;
+        this.validSpace = hex.validSpace;
     }
 
     public Hexagon(TerrainType type) {
@@ -34,8 +47,8 @@ public class Hexagon {
         return this.level;
     }
 
-    public void setLevel(int level) {
-        this.level += level;
+    public void incrementLevel() {
+        this.level += 1;
     }
 
     public boolean getSpaceIsValid() {
@@ -65,4 +78,25 @@ public class Hexagon {
     public void setVillagersOnTop(int numOfVillagers){ numVillagersOnTop = numOfVillagers; }
 
     public int getNumVillagersOnTop() { return this.numVillagersOnTop; }
+
+    public void printTerrain (TerrainType terrain){
+        if(terrain == TerrainType.VOLCANO){
+            System.out.println("VOLCANO");
+        }
+        else if(terrain == TerrainType.JUNGLE){
+            System.out.println("JUNGLE");
+        }
+        else if(terrain == TerrainType.LAKE){
+            System.out.println("LAKE");
+        }
+        else if(terrain == TerrainType.ROCKY){
+            System.out.println("ROCKY");
+        }
+        else if(terrain == TerrainType.GRASSLANDS){
+            System.out.println("GRASSLANDS");
+        }
+        else{
+            System.out.println("EMPTY");
+        }
+    }
 }
