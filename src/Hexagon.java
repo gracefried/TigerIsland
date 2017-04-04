@@ -8,6 +8,7 @@ public class Hexagon {
     private TerrainType terrainType;
     private int tileID;
     private int level;
+    private int player;
     private int numVillagersOnTop;
     private boolean occupied;
     private boolean validSpace;
@@ -19,6 +20,7 @@ public class Hexagon {
         this.numVillagersOnTop = 0;
         this.occupied = false;
         this.validSpace = false;
+        this.player=0; //player is zero until piece is placed
     }
 
     public Hexagon(Hexagon hex) {
@@ -29,6 +31,7 @@ public class Hexagon {
         this.numVillagersOnTop = hex.numVillagersOnTop;
         this.occupied = hex.occupied;
         this.validSpace = hex.validSpace;
+        this.player=hex.player;
     }
 
     public Hexagon(TerrainType type) {
@@ -78,6 +81,8 @@ public class Hexagon {
     public void setVillagersOnTop(int numOfVillagers){ numVillagersOnTop = numOfVillagers; }
 
     public int getNumVillagersOnTop() { return this.numVillagersOnTop; }
+
+    public int getPlayerNum(){return this.player;}
 
     public void printTerrain (TerrainType terrain){
         if(terrain == TerrainType.VOLCANO){

@@ -89,6 +89,8 @@ public class HexagonNeighborsCalculator {
                 .collect(toList());
     }
 
+
+
     private List<Point> offsetsWithinTile() {
         List<Point> offsetsList = new ArrayList<Point>();
 
@@ -160,6 +162,8 @@ public class HexagonNeighborsCalculator {
 
         return offsetsList;
     }
+
+
 
     private List<Point> offsetsAroundTile() {
         List<Point> offsetsList = new ArrayList<Point>();
@@ -238,6 +242,8 @@ public class HexagonNeighborsCalculator {
 
         return offsetsList;
     }
+
+
 
     // Didn't want to make a new PointUtils class rn sorry not sorry
     static private Point pointTranslatedByPoint(Point point, Point offset) {

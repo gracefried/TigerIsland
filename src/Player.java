@@ -3,7 +3,7 @@ import javax.swing.*;
 public class Player {
     private GameActionPerformer gameActionPerformer;
     private Inventory inventory;
-
+    private int playerID;
     // The tile the player has just drawn
     // Currently set to public for testing purposes
     // Maybe move this responsibility elsewhere

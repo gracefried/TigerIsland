@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.io.*;
+import java.util.*;
 
 public class Board {
     private ArrayList<ArrayList<Hexagon>> gameBoard = new ArrayList<>();
@@ -11,6 +13,9 @@ public class Board {
     private int maxBoardX = 0;
     private int minBoardY = 400;
     private int maxBoardY = 0;
+    private int previousHexPlayerID;
+    private int hexes;
+    private ArrayList<Point> adjacencyList[];
 
     public Board() {
         for (int ii = 0; ii < 400; ii++) {
@@ -184,5 +189,45 @@ public class Board {
 
     public int getNextTileID() {
         return nextTileID;
+    }
+
+    public void updateSettlements() {
+        int currentHexPlayerID;
+        int count = 0;
+        ArrayList<ArrayList<Point>> SettlementList = new ArrayList<ArrayList<Point>>();
+        Point[] visitedHex = new Point[100];
+        for (int ii = minBoardX; ii < maxBoardX; ii++) {
+            for (int jj = minBoardY; jj < maxBoardY; jj++) {
+                Hexagon tempHex = hexagonAtPoint (new Point(ii,jj));
+                int playerID= tempHex.getPiece().getPlayerID();
+
+                boolean visited [] = new boolean [hexes];
+                ArrayList<Point> queue = new ArrayList<Point>();
+                if (queue.size() == 0 ){
+                    visited[hexes]=true;
+                    queue.add(new Point(ii,jj));
+                    previousHexPlayerID=playerID;
+                }
+                else if (previousHexPlayerID==playerID){
+                    visited[hexes]=true;
+                    queue.add(new Point(ii,jj));
+                }
+                while(queue.size()!=0){
+                    ListIterator<Point> i = adjacencyList[hexes].listIterator();
+                    while (i.hasNext()){
+                        Point n = i.next();
+                        if (!visited[hexes] && (previousHexPlayerID == playerID)){
+                            visited[hexes] = true;
+                            queue.add(n);
+                        }
+                    }
+                }
+
+            }
+        }
+
+    }
+
+
     }
 }
