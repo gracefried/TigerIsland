@@ -163,13 +163,18 @@ public class Hexagon {
         if(piece instanceof Meeple && getMeepleSize() < getLevel() && getTerrainType() != TerrainType.VOLCANO) {
             setMeepleOnTop(true);
             meepleList.add((Meeple)piece);
+            if(getMeepleSize() == getLevel()) {
+                setOccupied(true);
+            }
         }
         else if(piece instanceof Totoro && getTotoroSize() < 1 && getTerrainType() != TerrainType.VOLCANO) {
             setTotoroOnTop(true);
+            setOccupied(true);
             totoroList.add((Totoro)piece);
         }
-        else if(piece instanceof Tiger && getTigerSize() < 1 && getTerrainType() != TerrainType.VOLCANO) {
+        else if(piece instanceof Tiger && getTigerSize() < 1 && getTerrainType() != TerrainType.VOLCANO && getLevel() >= 3) {
             setTigerOnTop(true);
+            setOccupied(true);
             tigerList.add((Tiger)piece);
         }
         else {
@@ -177,23 +182,15 @@ public class Hexagon {
         }
     }
 
-    public void removePiece(Piece piece) {
-        if(piece instanceof Meeple && getMeepleSize() > 0) {
-            meepleList.remove(piece);
+    public void removeMeeple(Meeple meeple) {
+        if(meeple instanceof Meeple && getMeepleSize() > 0) {
+            meepleList.remove(meeple);
             if(getMeepleSize() == 0) {
                 setMeepleOnTop(false);
             }
         }
-        else if(piece instanceof Totoro && getTotoroSize() > 0) {
-            setTotoroOnTop(false);
-            totoroList.remove(piece);
-        }
-        else if(piece instanceof Tiger && getTigerSize() > 0) {
-            setTigerOnTop(false);
-            tigerList.remove(piece);
-        }
         else {
-            System.out.println("Cannot perform removal of Piece from Hex.");
+            System.out.println("Cannot remove Meeple from Hex.");
         }
     }
 }
