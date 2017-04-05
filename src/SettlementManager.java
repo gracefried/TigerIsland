@@ -6,6 +6,8 @@ import java.util.Queue;
 
 /**
  * Created by hugh on 4/2/17.
+ * This class is responsible for managing all the settlements on the board
+ * It keeps a list of settlements - which are a list of Points
  */
 public class SettlementManager {
     private ArrayList<Settlement> listOfSettlements = new ArrayList<>();
@@ -89,12 +91,11 @@ public class SettlementManager {
         mergeSettlement(settlementToAddTo, settlementToDelete);
     }
 
-    // TODO: Need to refactor this. Currently uses fields from the board class
-    // TODO: Change so that it can update the listOfSettlements when passed in a Board object
-    public ArrayList<Settlement> updateSettlements(Board board) {
-        ArrayList<ArrayList<Hexagon>> gameBoard = new ArrayList<>();
-        ArrayList<Hexagon> visited = new ArrayList();
-        //ArrayList<Settlement> listOfSettlements = new ArrayList();
+    public void updateSettlements(Board board) {
+        ArrayList<ArrayList<Hexagon>> gameBoard = board.getGameBoardCopy();
+        ArrayList<Hexagon> visited = new ArrayList<>();
+        ArrayList<Settlement> updatedListOfSettlements = new ArrayList<>();
+
         int nextTileID = 1;
         int minBoardX = 3;
         int maxBoardX = 397;
@@ -104,7 +105,7 @@ public class SettlementManager {
         for (int ii = minBoardX; ii < maxBoardX; ii++) {
             for (int jj = minBoardY; jj < maxBoardY; jj++) {
                 if(gameBoard.get(jj).get(ii).getOccupied() && !visited.contains(gameBoard.get(jj).get(ii))) {
-                    Settlement newSettlement = new Settlement();
+                    Settlement newSettlement = new Settlement(new Point(jj, ii));
                     Hexagon visitingHexagon = gameBoard.get(jj).get(ii);
                     int visitingHexagonX = ii;
                     int visitingHexagonY = jj;
@@ -117,9 +118,9 @@ public class SettlementManager {
                     }
 
 
-                    Hexagon tempHex = board.hexagonAtPoint(new Point(ii, jj));
+                    Hexagon tempHex = board.copyOfHexagonAtPoint(new Point(ii, jj));
                     int playerID = tempHex.getPiece().getPlayerID();
-                    ArrayList<Hexagon> queue = new ArrayList();
+                    ArrayList<Hexagon> queue = new ArrayList<>();
 
                     queue.add(visitingHexagon);
                     while(!queue.isEmpty()) {
@@ -300,13 +301,12 @@ public class SettlementManager {
                             visitingHexagonX++;
                         }
                     }
-                    listOfSettlements.add(newSettlement);
+                    updatedListOfSettlements.add(newSettlement);
                 }
 
             }
         }
-        settlementList = listOfSettlements;
-        return listOfSettlements;
+        this.listOfSettlements = updatedListOfSettlements;
     }
 
 }
