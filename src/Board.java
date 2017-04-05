@@ -220,6 +220,8 @@ public class Board {
     public Point getPointOfWhereVolcanoWillBePlaced(Tile tile){
         TileOrientation tileOrientation = tile.getOrientation();
         //if(tileOrientation ==  tileOrientation.BOTTOMHEAVY && )
+        //TODO: how do I do this
+        return new Point(0, 0);
     }
 
     public ArrayList<Settlement> updateSettlements() {

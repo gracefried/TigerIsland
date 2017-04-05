@@ -203,6 +203,7 @@ public class TilePlacementRule {
 
         if (!hexagonsWithinTile.isEmpty()) {
             return false;
+            //Stick stacking logic in here
         }
 
         return !hexagonsAroundTile.isEmpty();

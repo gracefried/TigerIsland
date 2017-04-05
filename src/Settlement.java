@@ -6,16 +6,14 @@ import java.util.ArrayList;
  */
 public class Settlement {
     private Board board;
-    ArrayList<Point> OccupiedHexes;
-
-
+    ArrayList<Point> occupiedHexes;
 
     public Settlement() {
         this.board = board;
-        OccupiedHexes = new ArrayList();
+        occupiedHexes = new ArrayList();
     }
 
     public int getSettlementSize(){
-        return OccupiedHexes.size();
+        return occupiedHexes.size();
     }
 }
