@@ -10,17 +10,8 @@ import java.util.ArrayList;
 public class Settlement {
     // List of all hexagons in a particular settlement
     private ArrayList<Point> pointsInSettlement = new ArrayList<>();
-    private Board gameBoard;
     private boolean containsTotoro;
     private boolean containsTiger;
-
-    // Constructor taking a Board
-    // Maybe refactor this so a Settlement does not have to be aware of a board object
-    public Settlement(Board board){
-        gameBoard =  board;
-        containsTotoro = false;;
-        containsTiger = false;
-    }
 
     // Constructor taking in a Point object
     public Settlement(Point newSettlementPoint){
@@ -82,5 +73,11 @@ public class Settlement {
         return containsTiger;
     }
 
+    // Prints a list of (x, y) points in this settlement
+    public void printPoints(){
+        for(Point p : pointsInSettlement){
+            System.out.format("(%d, %d)", p.getX(), p.getY());
+        }
+    }
 
 }
