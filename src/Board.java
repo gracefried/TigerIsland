@@ -63,7 +63,7 @@ public class Board {
             Hexagon hex = hexagonAtPoint(p);
             hex.incrementLevel();
             hex.setTileID(nextTileID);
-            hex.setOccupied(false);
+            //hex.setOccupied(false);
 
             minBoardX = java.lang.Math.min(minBoardX, (int)p.getX());
             minBoardY = java.lang.Math.min(minBoardY, (int)p.getY());
@@ -106,7 +106,7 @@ public class Board {
             Hexagon hex = hexagonAtPoint(point);
             hex.incrementLevel();
             hex.setTileID(nextTileID);
-            hex.setOccupied(false);
+            //hex.setOccupied(false);
 
             minBoardX = java.lang.Math.min(minBoardX, (int)point.getX());
             minBoardY = java.lang.Math.min(minBoardY, (int)point.getY());
@@ -254,6 +254,49 @@ public class Board {
         return stackInfo;
     }
 
+    public HashMap<Point, Boolean> offsetsAtEdgeOfSettlementAtOffset(Point settlementOffset) {
+        // This does a BFS from settlementOffset and finds the offsets at the edge of the settlement.
+        HashMap<Point, Boolean> validOffsets = new HashMap<>();
+        HashMap<Point, Boolean> visited = new HashMap<>();
+
+        ArrayList<Point> queue = new ArrayList<>();
+        queue.add(settlementOffset);
+
+        Integer settlementID =  hexagonAtPoint(boardPointForOffset(settlementOffset)).getOccupiedID();
+
+        if (settlementID == Integer.MIN_VALUE) {
+            return validOffsets;
+        }
+
+        while (!queue.isEmpty()) {
+            Point offset = queue.remove(0);
+
+            Point point = boardPointForOffset(offset);
+            Hexagon hex = hexagonAtPoint(point);
+
+            visited.put(offset, true);
+
+            ArrayList<Point> appliedNeighborOffsets = new ArrayList<>();
+            for (Point neighborOffset : HexagonNeighborsCalculator.hexagonNeighborOffsets()) {
+                appliedNeighborOffsets.add(Board.pointTranslatedByPoint(offset, neighborOffset));
+            }
+
+            for (Point neighborOffset : appliedNeighborOffsets) {
+                Point neighborPoint = boardPointForOffset(neighborOffset);
+                Hexagon neighborHex = hexagonAtPoint(neighborPoint);
+
+                if (!neighborHex.getOccupiedID().equals(settlementID)) {
+                    validOffsets.put(neighborOffset, true);
+                    visited.put(neighborOffset, true);
+                } else if (visited.get(neighborOffset) == null) {
+                    queue.add(neighborOffset);
+                }
+            }
+        }
+
+        return validOffsets;
+    }
+
     /***** CONVERSIONS *****/
 
     /*
@@ -342,7 +385,7 @@ public class Board {
     // Founds a new settlement at the specified hexagon
     // Puts one villager at the location and creates a new settlement object
     public void foundSettlementAtPoint(Point point, int id) {
-        hexagonAtPoint(point).setOccupied(true);
+        hexagonAtPoint(point).setOccupied(id);
         settlementManager.addNewSettlement(new Settlement(point));
     }
 
