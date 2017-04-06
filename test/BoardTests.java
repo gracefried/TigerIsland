@@ -1,110 +1,102 @@
+import javafx.geometry.Point3D;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.awt.*;
+import java.lang.reflect.Array;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Arrays;
+
+import java.util.Comparator;
 
 public class BoardTests {
-   /* @Test
-    public void testBoardCopyAndEquality() {
-        Board board = new Board();
-        Tile tile1 = new Tile(TerrainType.JUNGLE,  TerrainType.GRASSLANDS, TerrainType.VOLCANO);
-        board.placeTile(tile1, new Point(200,200));
-        Board copy = new Board(board);
-        Assert.assertEquals(board, copy);
-        Assert.assertFalse(board == copy);
-        Tile tile2 = new Tile(TerrainType.VOLCANO,  TerrainType.JUNGLE, TerrainType.LAKE);
-        board.placeTile(tile1, new Point(199,199));
-        Assert.assertNotEquals(copy, board);
-        Assert.assertFalse(board == copy);
-    }*/
-
     @Test
-    public void testBoardAllowsFirstPlaceInMiddle() {
+    public void testCreateBoard() {
         Board board = new Board();
-        Tile tile = new Tile(TerrainType.JUNGLE,  TerrainType.GRASSLANDS, TerrainType.VOLCANO);
-        board.placeTile(tile, new Point(200, 200));
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testBoardThrowsForFirstTurnNotInMiddle() {
-        Board board = new Board();
-        Tile tile = new Tile(TerrainType.JUNGLE,  TerrainType.GRASSLANDS, TerrainType.VOLCANO);
-        board.placeTile(tile, new Point(201, 201));
+        Assert.assertTrue(true);
     }
 
     @Test
-    public void createBoardAndPlaceTile() {
-        Board gameBoard = new Board();
+    public void testBoardCreatedWithFirstTile() {
+        Board board = new Board();
 
-        TerrainType volcano = TerrainType.VOLCANO;
-        TerrainType grasslands = TerrainType.GRASSLANDS;
-        TerrainType jungle = TerrainType.JUNGLE;
+        Point center = new Point(0, 0);
+        TerrainType actual = board.getTerrainTypeAtPoint(board.boardPointForOffset(center));
+        Assert.assertEquals(TerrainType.VOLCANO, actual);
 
-        Tile tile1 = new Tile(jungle, grasslands, volcano);
+        Point tl = new Point( 0, -1);
+        actual = board.getTerrainTypeAtPoint(board.boardPointForOffset(tl));
+        Assert.assertEquals(TerrainType.JUNGLE, actual);
 
-        gameBoard.placeTile(tile1, new Point(200,200));
+        Point tr = new Point(1, -1);
+        actual = board.getTerrainTypeAtPoint(board.boardPointForOffset(tr));
+        Assert.assertEquals(TerrainType.LAKE, actual);
 
-        Assert.assertEquals(volcano, gameBoard.getTerrainTypeAtPoint(new Point(200,200)));
-        Assert.assertEquals(1, gameBoard.getLevelAtPoint(new Point(200,200)));
-        Assert.assertEquals(1, gameBoard.getTileIDAtPoint(new Point(200,200)));
+        Point br = new Point( 0, 1);
+        actual = board.getTerrainTypeAtPoint(board.boardPointForOffset(br));
+        Assert.assertEquals(TerrainType.GRASSLANDS, actual);
 
-        Assert.assertEquals(jungle, gameBoard.getTerrainTypeAtPoint(new Point(199,199)));
-        Assert.assertEquals(1, gameBoard.getLevelAtPoint(new Point(199,199)));
-        Assert.assertEquals(1, gameBoard.getTileIDAtPoint(new Point(199,199)));
-
-        Assert.assertEquals(grasslands, gameBoard.getTerrainTypeAtPoint(new Point(201,199)));
-        Assert.assertEquals(1, gameBoard.getLevelAtPoint(new Point(201,199)));
-        Assert.assertEquals(1, gameBoard.getTileIDAtPoint(new Point(201,199)));
+        Point bl = new Point(-1, 1);
+        actual = board.getTerrainTypeAtPoint(board.boardPointForOffset(bl));
+        Assert.assertEquals(TerrainType.ROCKY, actual);
     }
 
-//    @Test
-//    public void createBoardAndPlaceSeparateTiles() {
-//        Board gameBoard = new Board();
-//
-//        TerrainType volcano = TerrainType.VOLCANO;
-//        TerrainType grasslands = TerrainType.GRASSLANDS;
-//        TerrainType lake = TerrainType.LAKE;
-//        TerrainType jungle = TerrainType.JUNGLE;
-//
-//        Tile tile1 = new Tile(volcano, grasslands, lake);
-//
-//        Tile tile2 = new Tile(grasslands, volcano, jungle);
-//        tile2.changeOrientation();  //bottomheavy Changes: Grass-left, Jungle-right, Volcano-middle (swap R,M)
-//
-//        Point testPoint = new Point(200,200);
-//        Point secondTestPoint = new Point (201,201);
-//
-//        gameBoard.placeTile(tile1, testPoint);
-//        gameBoard.placeTile(tile2, secondTestPoint);
-//
-//        Assert.assertEquals(grasslands, gameBoard.getTerrainTypeAtPoint(new Point(200,202)));
-//        Assert.assertEquals(1, gameBoard.getLevelAtPoint(new Point(200,202)));
-//        Assert.assertEquals(2, gameBoard.getTileIDAtPoint(new Point(200,202)));
-//
-//        Assert.assertEquals(jungle, gameBoard.getTerrainTypeAtPoint(new Point(202,202)));
-//        Assert.assertEquals(1, gameBoard.getLevelAtPoint(new Point(202,202)));
-//        Assert.assertEquals(2, gameBoard.getTileIDAtPoint(new Point(202,202)));
-//
-//        Assert.assertEquals(volcano, gameBoard.getTerrainTypeAtPoint(new Point(201,201)));
-//        Assert.assertEquals(1, gameBoard.getLevelAtPoint(new Point(201,201)));
-//        Assert.assertEquals(2, gameBoard.getTileIDAtPoint(new Point(201,201)));
-//    }
+    @Test
+    public void testBoardExpectedFirstValidSpots() {
+        Board board = new Board();
+        Set<Point> offsets = board.offsetsAtEdgeOfCurrentlyPlayedBoard().keySet();
 
-    @Test(expected=IllegalArgumentException.class)
-    public void createBoardAndStackTwoTiles() {
-        Board gameBoard = new Board();
+        Set<Point> expected = new HashSet<Point>(Arrays.asList(
+                new Point(-1, 2),
+                new Point(-2, 2),
+                new Point(-2, 1),
+                new Point(-1, 0),
+                new Point(-1, -1),
+                new Point(0, -2),
+                new Point(1, -2),
+                new Point(2, -2),
+                new Point(2, -1),
+                new Point(1, 0),
+                new Point(1, 1),
+                new Point(0, 2)
+        ));
 
-        TerrainType volcano = TerrainType.VOLCANO;
-        TerrainType grasslands = TerrainType.GRASSLANDS;
-        TerrainType rocky = TerrainType.ROCKY;
-        TerrainType jungle = TerrainType.JUNGLE;
-
-        Tile tile1 = new Tile(volcano, grasslands, jungle);
-        Tile tile2 = new Tile(grasslands, volcano, rocky);
-
-        Point testPoint = new Point(200,200);
-
-        gameBoard.placeTile(tile1, testPoint);
-        gameBoard.placeTile(tile2, testPoint);
+        Assert.assertTrue(expected.equals(offsets));
     }
+
+    @Test
+    public void testBoardExpectedSecondValidSpots() {
+        Board board = new Board();
+
+        Tile tile = new Tile(TerrainType.LAKE, TerrainType.LAKE);
+        tile.setOrientation(6);
+
+        board.placeTile(tile, Board.axialToCube(new Point(-1, -1)));
+
+        Set<Point> offsets = board.offsetsAtEdgeOfCurrentlyPlayedBoard().keySet();
+
+        Set<Point> expected = new HashSet<Point>(Arrays.asList(
+                new Point(-1, 2),
+                new Point(-2, 2),
+                new Point(-2, 1),
+                new Point(-1, 0),
+                new Point(0, -3),
+                new Point(-1, -3),
+                new Point(-2, -2),
+                new Point(-3, -1),
+                new Point(-3, 0),
+                new Point(-2, 0),
+                new Point(0, -2),
+                new Point(1, -2),
+                new Point(2, -2),
+                new Point(2, -1),
+                new Point(1, 0),
+                new Point(1, 1),
+                new Point(0, 2)
+        ));
+
+        Assert.assertTrue(expected.equals(offsets));
+    }
+
 }

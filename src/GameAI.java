@@ -1,10 +1,8 @@
 /**
  * Created by gonzalonunez on 3/21/17.
  */
-import javafx.geometry.Point3D;
-
-import java.awt.*;
-import java.util.HashMap;
+import java.awt.Point;
+import java.util.Set;
 
 public class GameAI implements GameActionPerformer {
     private int id;
@@ -15,15 +13,21 @@ public class GameAI implements GameActionPerformer {
         this.inventory = new Inventory(id);
     }
 
-    public Point3D tileAction(Tile tile, Board board) {
-        // TODO: some naive optimal tile placement algorithm?
-        HashMap<Point, Boolean> validPoints = board.validPositionsForNewTile(tile);
-        Point chosenPoint = (Point)validPoints.keySet().toArray()[0];
-
-        // TODO: convert chosenPoint to Point3D and return it
-        return new Point3D(0, 0, 0);
+    /** DO NOT MODIFY THE BOARD. I'M SORRY BUT DEADLINES ARE DEATH */
+    public Point tileAction(Tile tile, Board board) {
+        Set<Point> edgePoints = board.offsetsAtEdgeOfCurrentlyPlayedBoard().keySet();
+        while (true) {
+            for (Point edgeOffset : edgePoints) {
+                if (board.canPlaceTileAtOffset(tile, edgeOffset)) {
+                    return edgeOffset;
+                }
+            }
+            int orientation = tile.getOrientation();
+            tile.setOrientation(orientation + 1);
+        }
     }
 
+    /** DO NOT MODIFY THE BOARD. I'M SORRY BUT DEADLINES ARE DEATH */
     public BuildAction buildAction(Board board) {
         //TODO: I want to iterate all of my settlements on the board
         /**
@@ -33,6 +37,6 @@ public class GameAI implements GameActionPerformer {
          Check all possible expansions for each type of adjacent terrain type and pick highest of those
          If none of the above place a single villager adjacent to a settlement of size < 5 if one exists, otherwise just put it anywhere
          **/
-        return new BuildAction(BuildActionType.FOUND_SETTLEMENT, new Point3D(0, 0, 0));
+        return new BuildAction(id, BuildActionType.FOUND_SETTLEMENT, new Point(0, 0));
     }
 }

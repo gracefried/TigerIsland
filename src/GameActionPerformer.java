@@ -1,9 +1,9 @@
 /**
  * Created by gonzalonunez on 3/16/17.
  */
-import javafx.geometry.Point3D;
+import java.awt.Point;
 
 public interface GameActionPerformer {
-    Point3D tileAction(Tile tile, Board board);
+    Point tileAction(Tile tile, Board board);
     BuildAction buildAction(Board board);
 }
