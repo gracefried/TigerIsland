@@ -6,9 +6,11 @@ import java.util.Set;
 import javafx.geometry.Point3D;
 
 public class Board {
-    private Hexagon[][] boardStorage;
+  
+  private Hexagon[][] boardStorage;
+   private SettlementManager settlementManager = new SettlementManager(this);
 
-    private int nextTileID = 1;
+  private int nextTileID = 1;
 
     private int dimensions = 200;
 
@@ -207,6 +209,7 @@ public class Board {
         return hexagonAtPoint(point).getTerrainType();
     }
 
+
     public int getLevelAtPoint(Point point) {
         return hexagonAtPoint(point).getLevel();
     }
@@ -257,13 +260,12 @@ public class Board {
     }
 
     public ArrayList<Settlement> updateSettlements() {
-
         ArrayList<Hexagon> visited = new ArrayList();
         ArrayList<Settlement> listOfSettlements = new ArrayList();
         for (int ii = minBoardX; ii < maxBoardX; ii++) {
             for (int jj = minBoardY; jj < maxBoardY; jj++) {
                 if(gameBoard.get(jj).get(ii).getOccupied() && !visited.contains(gameBoard.get(jj).get(ii))) {
-                    Settlement newSettlement = new Settlement();
+                    Settlement newSettlement = new Settlement(gameBoard);
                     Hexagon visitingHexagon = gameBoard.get(jj).get(ii);
                     int visitingHexagonX = ii;
                     int visitingHexagonY = jj;
@@ -290,7 +292,7 @@ public class Board {
                         Hexagon hexRight = gameBoard.get(visitingHexagonY).get(visitingHexagonX+1);
                         Hexagon hexDownLeft = gameBoard.get(visitingHexagonY+1).get(visitingHexagonX-1);
                         Hexagon hexDownRight = gameBoard.get(visitingHexagonY+1).get(visitingHexagonX+1);
-                        //put all of its neightbors into the queue
+                        //put all of its neighbors into the queue
                         //Check if it's even
                         if(isEvenOrOdd == 0) {
                             if(hexUp.getOccupied()){
@@ -422,7 +424,7 @@ public class Board {
                         //Add our visitingHexagon to the visited list
                         visited.add(visitingHexagon);
                         //update settlementCoordinates
-                        newSettlement.occupiedHexes.add(new Point(visitingHexagonX, visitingHexagonY));
+                        newSettlement.getPointsInSettlement().add(new Point(visitingHexagonX, visitingHexagonY));
                         //pop visitingHexagon out of our queue
                         queue.remove(0);
                         //update our visitingHexagon to the front of the queue
@@ -451,7 +453,8 @@ public class Board {
                         }
                         else if(visitingHexagon == hexUpLeft){
                             visitingHexagonY--;
-                            visitingHexagonX--;
+                            visitingHexagonX
+                                    --;
                         }
                         else if(visitingHexagon == hexUpRight){
                             visitingHexagonY--;
@@ -467,4 +470,16 @@ public class Board {
         return listOfSettlements;
     }
     */
+  
+    // Places a Totoro at the specified Hexagon
+    public void buildTotoroSanctuary(Point point, int id){
+        // Add a Totoro to the hexagon
+        hexagonAtPoint(point).addPiece(new Totoro(id));
+
+        // Find the particuclar settlement this point belongs to and add the point to the settlement
+        // as well as setting the Totoro to be truue;
+        Settlement settlementToUpdate = settlementManager.getSettlementFromPoint(point);
+        settlementToUpdate.addPointToSettlement(point);
+        settlementToUpdate.addTotoro();
+    }
 }
