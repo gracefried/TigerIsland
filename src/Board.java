@@ -1,192 +1,208 @@
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Set;
 
-public class Board {
-    private ArrayList<ArrayList<Hexagon>> gameBoard = new ArrayList<>();
-    private SettlementManager settlementManager = new SettlementManager();
-    private int nextTileID = 1;
-    private int minBoardX = 3;
-    private int maxBoardX = 397;
-    private int minBoardY = 3;
-    private int maxBoardY = 397;
+import javafx.geometry.Point3D;
+
+public class Board {  
+  private Hexagon[][] boardStorage;
+   private SettlementManager settlementManager = new SettlementManager(this);
+
+  private int nextTileID = 1;
+
+    private int dimensions = 200;
+
+    private int minBoardX = -3;
+    private int maxBoardX = 3;
+
+    private int minBoardY = -3;
+    private int maxBoardY = 3;
+
+    private ArrayList<Settlement> settlementList;
 
     public Board() {
-        for (int ii = 0; ii < 400; ii++) {
-            ArrayList<Hexagon> hexagons = new ArrayList<Hexagon>();
+        int dim = dimensions;
 
-            for (int jj = 0; jj < 400; jj++) {
-                Hexagon hex = new Hexagon();
+        boardStorage = new Hexagon[dim][dim];
 
-                if (ii % 2 == 0 && jj % 2 == 0) {
-                    hex.setSpaceAsValid(true);
-                } else if (ii % 2 == 1 && jj % 2 == 1) {
-                    hex.setSpaceAsValid(true);
-                } else {
-                    hex.setSpaceAsValid(false);
-                }
-
-                hexagons.add(hex);
+        for(int i = 0; i < dim; i++){
+            for(int j = 0; j < dim; j++){
+                boardStorage[i][j] = new Hexagon(TerrainType.EMPTY, 0,0);
             }
-
-            gameBoard.add(hexagons);
-        }
-    }
-
-    // Copy constructor
-    public Board(Board aBoard) {
-        gameBoard = aBoard.getGameBoardCopy();
-        nextTileID = aBoard.nextTileID;
-        minBoardX = aBoard.minBoardX;
-        maxBoardX = aBoard.maxBoardX;
-        minBoardY = aBoard.minBoardY;
-        maxBoardY = aBoard.maxBoardY;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) return true;
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
-
-        Board other = (Board)obj;
-
-        return other.gameBoard.equals(gameBoard) &&
-                other.gameBoard != gameBoard &&
-                other.nextTileID == nextTileID &&
-                other.minBoardY == minBoardY &&
-                other.maxBoardY == maxBoardY &&
-                other.minBoardX == minBoardX &&
-                other.maxBoardX == maxBoardX;
-    }
-
-    public void placeTile(Tile tileToPlace, Point tileCoordinate) throws IllegalArgumentException {
-        HashMap<Point, Boolean> validCoordinates = validPositionsForNewTile(tileToPlace);
-
-        if (validCoordinates.get(tileCoordinate) == null) {
-            throw new IllegalArgumentException("{ " + tileCoordinate.getX() + ", " + tileCoordinate.getY() + " } is not a playable spot!");
         }
 
-        HexagonNeighborsCalculator calc = new HexagonNeighborsCalculator(tileCoordinate, tileToPlace.getOrientation(), tileToPlace.getAnchorPosition());
-        HashMap<HexagonPosition, Point> points = calc.pointsForTerrainHexagons();
+        // Place first tile
 
-        Point leftPoint = points.get(HexagonPosition.LEFT);
-        Point midPoint = points.get(HexagonPosition.MIDDLE);
-        Point rightPoint = points.get(HexagonPosition.RIGHT);
+        Point point = boardPointForOffset(new Point(0, 0));
+        hexagonAtPoint(point).setTerrainType(TerrainType.VOLCANO);
 
-        TerrainType left = tileToPlace.getTerrainTypeForPosition(HexagonPosition.LEFT);
-        TerrainType right = tileToPlace.getTerrainTypeForPosition(HexagonPosition.RIGHT);
-        TerrainType middle = tileToPlace.getTerrainTypeForPosition(HexagonPosition.MIDDLE);
+        point = boardPointForOffset(new Point(0, -1));
+        hexagonAtPoint(point).setTerrainType(TerrainType.JUNGLE);
 
-        hexagonAtPoint(leftPoint).setTerrainType(left);
-        hexagonAtPoint(rightPoint).setTerrainType(right);
-        hexagonAtPoint(midPoint).setTerrainType(middle);
+        point = boardPointForOffset(new Point(1, -1));
+        hexagonAtPoint(point).setTerrainType(TerrainType.LAKE);
 
-        for (Point point : calc.neighborsWithinTile()) {
-            Hexagon hex = hexagonAtPoint(point);
+        point = boardPointForOffset(new Point(0, 1));
+        hexagonAtPoint(point).setTerrainType(TerrainType.GRASSLANDS);
+
+        point = boardPointForOffset(new Point(-1, 1));
+        hexagonAtPoint(point).setTerrainType(TerrainType.ROCKY);
+
+        Point[] points = new Point[] {
+                boardPointForOffset(new Point(0, 0)),
+                boardPointForOffset(new Point(0, -1)),
+                boardPointForOffset(new Point(1, -1)),
+                boardPointForOffset(new Point(0, 1)),
+                boardPointForOffset(new Point(-1, 1))
+        };
+
+        for (Point p : points) {
+            Hexagon hex = hexagonAtPoint(p);
             hex.incrementLevel();
-            hex.setOccupied(false);
             hex.setTileID(nextTileID);
+            hex.setOccupied(false);
+
+            minBoardX = java.lang.Math.min(minBoardX, (int)p.getX());
+            minBoardY = java.lang.Math.min(minBoardY, (int)p.getY());
         }
 
         nextTileID++;
+    }
 
-        //trying to fin the min and max to print from
+    // Didn't want to make a new PointUtils class rn sorry not sorry
+    static public Point pointTranslatedByPoint(Point point, Point offset) {
+        Point copy = new Point(point);
+        copy.translate(offset.x, offset.y);
+        return copy;
+    }
 
-        //This case is just the first tile case. Checking the min and max is different in only this case I believe
-        if(minBoardX == 3 && minBoardY == 3 && maxBoardX == 397 && maxBoardY == 397){
-            for (int ii = minBoardX - 3; ii < maxBoardX+3; ii++) {
-                for (int jj = minBoardY; jj < maxBoardY; jj++) {
-                    if(gameBoard.get(jj).get(ii).getTileID() != 0){
-                        if(ii < maxBoardX){
-                            maxBoardX = ii;
-                        }
-                        if(jj < maxBoardY){
-                            maxBoardY = jj;
-                        }
-                        if(ii > minBoardX){
-                            minBoardX = ii;
-                        }
-                        if(jj > minBoardY){
-                            minBoardY = jj;
-                        }
-                    }
+    public Point centerOfBoard() {
+        return new Point(dimensions/2, dimensions/2);
+    }
+
+    public Point boardPointForOffset(Point offset) {
+        return Board.pointTranslatedByPoint(centerOfBoard(), offset);
+    }
+
+    public void placeTile(Tile tileToPlace, Point3D centerOffset) {
+        Point axialOffset = Board.cubeToAxial(centerOffset);
+
+        HexagonNeighborsCalculator calc = new HexagonNeighborsCalculator(tileToPlace);
+        HashMap<HexagonPosition, Point> abOffsets = calc.offsetsForAB();
+
+        Point points[] = new Point[3];
+        points[0] = boardPointForOffset(axialOffset);
+        points[1] = Board.pointTranslatedByPoint(points[0], abOffsets.get(HexagonPosition.A));
+        points[2] = Board.pointTranslatedByPoint(points[0], abOffsets.get(HexagonPosition.B));
+
+        hexagonAtPoint(points[0]).setTerrainType(TerrainType.VOLCANO);
+        hexagonAtPoint(points[1]).setTerrainType(tileToPlace.getTerrainTypeForPosition(HexagonPosition.A));
+        hexagonAtPoint(points[2]).setTerrainType(tileToPlace.getTerrainTypeForPosition(HexagonPosition.B));
+
+        for (Point point : points) {
+            Hexagon hex = hexagonAtPoint(point);
+            hex.incrementLevel();
+            hex.setTileID(nextTileID);
+            hex.setOccupied(false);
+
+            minBoardX = java.lang.Math.min(minBoardX, (int)point.getX());
+            minBoardY = java.lang.Math.min(minBoardY, (int)point.getY());
+        }
+
+        nextTileID++;
+    }
+
+    public HashMap<Point, Boolean> offsetsAtEdgeOfCurrentlyPlayedBoard() {
+        // This does a BFS from the center of the board in order to find all the empty hexagons at the edge where we can place a tile.
+        HashMap<Point, Boolean> validOffsets = new HashMap<>();
+        HashMap<Point, Boolean> visited = new HashMap<>();
+
+        ArrayList<Point> queue = new ArrayList<>();
+        queue.add(new Point(0, 0));
+
+        while (!queue.isEmpty()) {
+            Point offset = queue.remove(0);
+
+            Point point = boardPointForOffset(offset);
+            Hexagon hex = hexagonAtPoint(point);
+
+            // If this hex is empty, we're at the edge of played board. We can potentially place there.
+            if (visited.get(offset) == null && hex.getTerrainType() == TerrainType.EMPTY) {
+                validOffsets.put(offset, true);
+            }
+
+            visited.put(offset, true);
+
+            ArrayList<Point> appliedNeighborOffsets = new ArrayList<>();
+            for (Point neighborOffset : HexagonNeighborsCalculator.hexagonNeighborOffsets()) {
+                appliedNeighborOffsets.add(Board.pointTranslatedByPoint(offset, neighborOffset));
+            }
+
+            for (Point neighborOffset : appliedNeighborOffsets) {
+                Point neighborPoint = boardPointForOffset(neighborOffset);
+                Hexagon neighborHex = hexagonAtPoint(neighborPoint);
+
+                if (neighborHex.getTerrainType() == TerrainType.EMPTY) {
+                    validOffsets.put(neighborOffset, true);
+                    visited.put(neighborOffset, true);
+                } else if (visited.get(neighborOffset) == null) {
+                    queue.add(neighborOffset);
                 }
             }
         }
-        else {
-            for (int ii = minBoardX - 3; ii < maxBoardX + 3; ii++) {
-                for (int jj = minBoardY-3; jj < maxBoardY+3; jj++) {
-                    if (gameBoard.get(jj).get(ii).getTileID() != 0) {
-                        if (ii > maxBoardX) {
-                            maxBoardX = ii;
-                        }
-                        if (jj > maxBoardY) {
-                            maxBoardY = jj;
-                        }
-                        if (ii < minBoardX) {
-                            minBoardX = ii;
-                        }
-                        if (jj < minBoardY) {
-                            minBoardY = jj;
-                        }
-                    }
-                }
-            }
-        }
-        //making sure we don't go less than 0 or greater than 400
-        if(minBoardX >= 3){
-            minBoardX = minBoardX - 3;
-        }
-        if(minBoardY >= 3){
-            minBoardY = minBoardX - 3;
-        }
-        if(maxBoardX <= 397){
-            maxBoardX = maxBoardX + 3;
-        }
-        if(maxBoardY <= 397){
-            maxBoardY = maxBoardX + 3;
-        }
 
+        //TODO: Add spots where we can potentially stack
+
+        return validOffsets;
     }
 
-    public HashMap<Point, Boolean> validPositionsForNewTile(Tile tile) {
-        HashMap<Point, Boolean> validPoints = new HashMap<>();
-
-        Board boardCopy = new Board(this);
-        FirstTilePlacementRule firstTilePR = new FirstTilePlacementRule(tile, boardCopy);
-        TilePlacementRule placementRule = new TilePlacementRule(tile, boardCopy);
-
-        List<TilePlacementRule> rules = Arrays.asList(firstTilePR, placementRule);
-
-        for (int y = 3; y <= 396; y++) {
-            for (int x = 3; x <= 396; x++) {
-                Point point = new Point(x, y);
-                for (TilePlacementRule rule : rules) {
-                    if (rule.tileMeetsConditionsForRuleToApply() && rule.pointIsValid(point)) {
-                        validPoints.put(point, true);
-                    }
-                }
-            }
+    public boolean canPlaceTileAtOffset(Tile tile, Point offset) {
+        Set<Point> edgePoints = offsetsAtEdgeOfCurrentlyPlayedBoard().keySet();
+        if (!edgePoints.contains(offset)) {
+            return false;
         }
 
-        return validPoints;
+        HexagonNeighborsCalculator calc = new HexagonNeighborsCalculator(tile);
+        HashMap<HexagonPosition, Point> abOffsets = calc.offsetsForAB();
+
+        Point pointA = boardPointForOffset(Board.pointTranslatedByPoint(offset, abOffsets.get(HexagonPosition.A)));
+        Point pointB = boardPointForOffset(Board.pointTranslatedByPoint(offset, abOffsets.get(HexagonPosition.B)));
+
+        Hexagon hexA = hexagonAtPoint(pointA);
+        Hexagon hexB = hexagonAtPoint(pointB);
+
+        return hexA.getTerrainType() == TerrainType.EMPTY && hexB.getTerrainType() == TerrainType.EMPTY;
     }
 
-    public ArrayList<ArrayList<Hexagon>> getGameBoardCopy() {
-        return new ArrayList<ArrayList<Hexagon>>(gameBoard);
+    /***** CONVERSIONS *****/
+
+    /*
+    # convert cube to axial
+    q = x
+    r = z
+    */
+
+    public static Point cubeToAxial(Point3D cube) {
+        return new Point((int)cube.getX(), (int)cube.getZ());
     }
 
-    private Hexagon hexagonAtPoint(Point p) {
-        return gameBoard.get(p.y).get(p.x);
+    /*
+    # convert axial to cube
+    x = q
+    z = r
+    y = -x-z
+    */
+
+    public static Point3D axialToCube(Point point) {
+        return new Point3D(point.getX(),-point.getX()-point.getY(), point.getY());
     }
 
-    public Hexagon copyOfHexagonAtPoint(Point p) {
-        return new Hexagon(hexagonAtPoint(p));
-    }
+    /***** GETTERS *****/
 
+    public Hexagon hexagonAtPoint(Point p) {
+        return boardStorage[p.x][p.y];
+    }
 
     public TerrainType getTerrainTypeAtPoint(Point point) {
         return hexagonAtPoint(point).getTerrainType();
@@ -205,6 +221,23 @@ public class Board {
         return nextTileID;
     }
 
+    public int getMinX() {
+        return minBoardX;
+    }
+
+    public int getMinY() {
+        return minBoardY;
+    }
+
+    public int getMaxX() {
+        return maxBoardX;
+    }
+
+    public int getMaxY() {
+        return maxBoardY;
+    }
+
+    /*
     public Point getPointOfHexagon(Hexagon hexagon){
         for (int ii = minBoardX - 3; ii < maxBoardX + 3; ii++) {
             for (int jj = minBoardY - 3; jj < maxBoardY + 3; jj++) {
@@ -231,9 +264,9 @@ public class Board {
         hexagonAtPoint(point).addPiece(new Meeple(id));
         settlementManager.addNewSettlement(new Settlement(point));
     }
-
-    // Places a Totoro at the specified hexagon
-    // Assumes that the location is a valid spot
+    */
+  
+    // Places a Totoro at the specified Hexagon
     public void buildTotoroSanctuary(Point point, int id){
         // Add a Totoro to the hexagon
         hexagonAtPoint(point).addPiece(new Totoro(id));

@@ -1,4 +1,4 @@
-import javafx.geometry.Point3D;
+import java.awt.Point;
 
 public class Player {
     private int id;
@@ -21,21 +21,21 @@ public class Player {
 
     // Make our move
 
-    public Point3D performTileAction(Tile tile) {
-        Point3D chosenPoint = gameActionPerformer.tileAction(tile, game.getBoardCopy());
+    public Point performTileAction(Tile tile) {
+        Point chosenPoint = gameActionPerformer.tileAction(tile, game.getGameBoard());
         game.applyTileAction(tile, chosenPoint);
         return chosenPoint;
     }
 
     public BuildAction performBuildAction() {
-        BuildAction chosenBuildAction = gameActionPerformer.buildAction(game.getBoardCopy());
+        BuildAction chosenBuildAction = gameActionPerformer.buildAction(game.getGameBoard());
         game.applyBuildAction(chosenBuildAction);
         return chosenBuildAction;
     }
 
     // Apply opponents move
 
-    public void applyOtherTileAction(Tile tile, Point3D point) {
+    public void applyOtherTileAction(Tile tile, Point point) {
         game.applyTileAction(tile, point);
     }
 

@@ -9,49 +9,45 @@ public class Hexagon {
     private TerrainType terrainType;
     private int tileID;
     private int level;
-    private boolean occupied;
-    private boolean validSpace;
-    private Point boardPoint;
+
+    private boolean isOccupied;
+
     private boolean meepleOnTop;
     private boolean totoroOnTop;
     private boolean tigerOnTop;
+
     ArrayList<Meeple> meepleList;
     ArrayList<Totoro> totoroList;
     ArrayList<Tiger> tigerList;
 
-
-
     public Hexagon() {
         this.terrainType = TerrainType.EMPTY;
+
         this.tileID = 0;
         this.level = 0;
-        this.occupied = false;
-        this.validSpace = false;
+
+        this.isOccupied = false;
+
         this.meepleOnTop = false;
         this.totoroOnTop = false;
         this.tigerOnTop = false;
+
         this.meepleList = new ArrayList<>(20);
         this.totoroList = new ArrayList<>(1);
         this.tigerList = new ArrayList<>(1);
     }
 
-    public Hexagon(Hexagon hex) {
-        if (hex == null) { return; }
-        this.terrainType = hex.terrainType;
-        this.tileID = hex.tileID;
-        this.level = hex.level;
-        this.occupied = hex.occupied;
-        this.validSpace = hex.validSpace;
-        this.meepleOnTop = hex.meepleOnTop;
-        this.totoroOnTop = hex.totoroOnTop;
-        this.tigerOnTop = hex.tigerOnTop;
-        this.meepleList = hex.meepleList;
-        this.totoroList = hex.totoroList;
-        this.tigerList = hex.tigerList;
+    public Hexagon(TerrainType type) {
+        this();
+        this.terrainType = type;
     }
 
-    public Hexagon(TerrainType type) {
+    public Hexagon(TerrainType type, int tileID, int level) {
+        this();
         this.terrainType = type;
+        this.tileID = tileID;
+        this.level = level;
+        this.isOccupied = false;
     }
 
     public TerrainType getTerrainType() {
@@ -70,14 +66,6 @@ public class Hexagon {
         this.level += 1;
     }
 
-    public boolean getSpaceIsValid() {
-        return this.validSpace;
-    }
-
-    public void setSpaceAsValid(boolean valid) {
-        this.validSpace = valid;
-    }
-
     public int getTileID() {
         return this.tileID;
     }
@@ -87,11 +75,11 @@ public class Hexagon {
     }
 
     public boolean getOccupied() {
-        return this.occupied;
+        return this.isOccupied;
     }
 
     public void setOccupied(boolean occupied) {
-        this.occupied = occupied;
+        this.isOccupied = occupied;
     }
 
     public void printTerrain (TerrainType terrain){
@@ -163,13 +151,18 @@ public class Hexagon {
         if(piece instanceof Meeple && getMeepleSize() < getLevel() && getTerrainType() != TerrainType.VOLCANO) {
             setMeepleOnTop(true);
             meepleList.add((Meeple)piece);
+            if(getMeepleSize() == getLevel()) {
+                setOccupied(true);
+            }
         }
         else if(piece instanceof Totoro && getTotoroSize() < 1 && getTerrainType() != TerrainType.VOLCANO) {
             setTotoroOnTop(true);
+            setOccupied(true);
             totoroList.add((Totoro)piece);
         }
-        else if(piece instanceof Tiger && getTigerSize() < 1 && getTerrainType() != TerrainType.VOLCANO) {
+        else if(piece instanceof Tiger && getTigerSize() < 1 && getTerrainType() != TerrainType.VOLCANO && getLevel() >= 3) {
             setTigerOnTop(true);
+            setOccupied(true);
             tigerList.add((Tiger)piece);
         }
         else {
@@ -177,23 +170,15 @@ public class Hexagon {
         }
     }
 
-    public void removePiece(Piece piece) {
-        if(piece instanceof Meeple && getMeepleSize() > 0) {
-            meepleList.remove(piece);
+    public void removeMeeple(Meeple meeple) {
+        if(meeple instanceof Meeple && getMeepleSize() > 0) {
+            meepleList.remove(meeple);
             if(getMeepleSize() == 0) {
                 setMeepleOnTop(false);
             }
         }
-        else if(piece instanceof Totoro && getTotoroSize() > 0) {
-            setTotoroOnTop(false);
-            totoroList.remove(piece);
-        }
-        else if(piece instanceof Tiger && getTigerSize() > 0) {
-            setTigerOnTop(false);
-            tigerList.remove(piece);
-        }
         else {
-            System.out.println("Cannot perform removal of Piece from Hex.");
+            System.out.println("Cannot remove Meeple from Hex.");
         }
     }
 }

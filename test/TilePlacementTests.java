@@ -1,11 +1,23 @@
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.*;
-import java.awt.*;
+import java.awt.Point;
 
 
 public class TilePlacementTests {
+    @Test
+    public void testPlaceFirstTile() {
+        Board board = new Board();
+
+        Tile tile = new Tile(TerrainType.LAKE, TerrainType.GRASSLANDS);
+        tile.setOrientation(6);
+
+        board.placeTile(tile, Board.axialToCube(new Point(-1, -1)));
+
+        Assert.assertEquals(TerrainType.VOLCANO, board.getTerrainTypeAtPoint(board.boardPointForOffset(new Point(-1, -1))));
+        Assert.assertEquals(TerrainType.LAKE, board.getTerrainTypeAtPoint(board.boardPointForOffset(new Point(-2, -1))));
+        Assert.assertEquals(TerrainType.GRASSLANDS, board.getTerrainTypeAtPoint(board.boardPointForOffset(new Point(-1, -2))));
+    }
+
     /*
     @Test
     public void testFirstTileHasOneValidPoint() {

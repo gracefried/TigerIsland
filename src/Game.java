@@ -1,4 +1,4 @@
-import javafx.geometry.Point3D;
+import java.awt.Point;
 
 /**
  * Created by gonzalonunez on 3/16/17.
@@ -17,15 +17,32 @@ public class Game {
         board = new Board();
     }
 
-    public Board getBoardCopy() {
-        return new Board(board);
+    public void applyTileAction(Tile tile, Point point) {
+
     }
 
-    public void applyTileAction(Tile tile, Point3D point) {
-        //TODO: convert this to our coordinate system and apply it to our board
+    public void applyBuildAction(BuildAction buildAction) {
+        /*
+
+        Point3D point = buildAction.getCoordinates();
+        Integer id = buildAction.getID();
+        TerrainType terrainType = buildAction.getTerrainType();
+
+        switch (buildAction.getType()) {
+            case FOUND_SETTLEMENT:
+                board.foundSettlementAtPoint(point, id);
+            case EXPAND_SETTLEMENT:
+                board.expandSettlement(point, terrainType, id);
+            case TIGER_PLAYGROUND:
+                board.buildTigerPlayground(point, id);
+            case TOTORO_SANCTUARY:
+                board.buildTotoroSanctuary(point, id);
+        }
+
+        */
     }
 
-    public void applyBuildAction(BuildAction build) {
-        //TODO: apply it to our board
+    public Board getGameBoard() {
+        return board;
     }
 }
