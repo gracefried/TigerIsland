@@ -1,20 +1,23 @@
 /**
  * Created by gonzalonunez on 3/21/17.
  */
-import javafx.geometry.Point3D;
+
+import java.awt.*;
 
 public class BuildAction {
+    private int id;
     private BuildActionType type;
-    private Point3D coordinates;
+    private Point coordinates;
     private TerrainType terrainType = TerrainType.EMPTY;
 
-    public BuildAction(BuildActionType type, Point3D coordinates) {
+    public BuildAction(int id, BuildActionType type, Point coordinates) {
+        this.id = id;
         this.type = type;
         this.coordinates = coordinates;
     }
 
     // This is a very questionable design, it banks off of us never choosing or doing this option so just don't lmao
-    public BuildAction(BuildActionType type, Point3D coordinates, TerrainType terrainType) throws IllegalArgumentException {
+    public BuildAction(BuildActionType type, Point coordinates, TerrainType terrainType) throws IllegalArgumentException {
         this.type = type;
         this.coordinates = coordinates;
         this.terrainType = terrainType;
@@ -24,15 +27,23 @@ public class BuildAction {
         }
     }
 
-    public boolean isExpansionAction() {
-        return terrainType != TerrainType.EMPTY;
+    public Integer getID() {
+        return id;
+    }
+
+    public BuildActionType getType() {
+        return type;
+    }
+
+    public Point getCoordinates() {
+        return coordinates;
     }
 
     public TerrainType getTerrainType() {
         return terrainType;
     }
 
-    public Point3D getCoordinates() {
-        return coordinates;
+    public boolean isExpansionAction() {
+        return terrainType != TerrainType.EMPTY;
     }
 }

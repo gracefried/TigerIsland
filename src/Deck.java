@@ -14,87 +14,87 @@ public class Deck {
 
         //LAKES FIRST:
         //LAKE LAKE VOLCANO
-        tilePile[0] = new Tile(TerrainType.LAKE, TerrainType.LAKE, TerrainType.VOLCANO);
-        tilePile[1]= new Tile(TerrainType.LAKE, TerrainType.LAKE, TerrainType.VOLCANO);
-        tilePile[2]= new Tile(TerrainType.LAKE, TerrainType.LAKE, TerrainType.VOLCANO);
+        tilePile[0] = new Tile(TerrainType.LAKE, TerrainType.LAKE);
+        tilePile[1]= new Tile(TerrainType.LAKE, TerrainType.LAKE);
+        tilePile[2]= new Tile(TerrainType.LAKE, TerrainType.LAKE);
 
         //LAKE JUNGLE VOLCANO
-        tilePile[3]= new Tile(TerrainType.LAKE, TerrainType.JUNGLE, TerrainType.VOLCANO);
-        tilePile[4]= new Tile(TerrainType.LAKE, TerrainType.JUNGLE, TerrainType.VOLCANO);
-        tilePile[5]= new Tile(TerrainType.LAKE, TerrainType.JUNGLE, TerrainType.VOLCANO);
+        tilePile[3]= new Tile(TerrainType.LAKE, TerrainType.JUNGLE);
+        tilePile[4]= new Tile(TerrainType.LAKE, TerrainType.JUNGLE);
+        tilePile[5]= new Tile(TerrainType.LAKE, TerrainType.JUNGLE);
 
         //LAKE GRASSLANDS VOLCANO
-        tilePile[6]= new Tile(TerrainType.LAKE, TerrainType.GRASSLANDS, TerrainType.VOLCANO);
-        tilePile[7]= new Tile(TerrainType.LAKE, TerrainType.GRASSLANDS, TerrainType.VOLCANO);
-        tilePile[8]= new Tile(TerrainType.LAKE, TerrainType.GRASSLANDS, TerrainType.VOLCANO);
+        tilePile[6]= new Tile(TerrainType.LAKE, TerrainType.GRASSLANDS);
+        tilePile[7]= new Tile(TerrainType.LAKE, TerrainType.GRASSLANDS);
+        tilePile[8]= new Tile(TerrainType.LAKE, TerrainType.GRASSLANDS);
 
         //LAKE ROCKY VOLCANO
-        tilePile[9]= new Tile(TerrainType.LAKE, TerrainType.ROCKY, TerrainType.VOLCANO);
-        tilePile[10]= new Tile(TerrainType.LAKE, TerrainType.ROCKY, TerrainType.VOLCANO);
-        tilePile[11]= new Tile(TerrainType.LAKE, TerrainType.ROCKY, TerrainType.VOLCANO);
+        tilePile[9]= new Tile(TerrainType.LAKE, TerrainType.ROCKY);
+        tilePile[10]= new Tile(TerrainType.LAKE, TerrainType.ROCKY);
+        tilePile[11]= new Tile(TerrainType.LAKE, TerrainType.ROCKY);
 
         //JUNGLES FIRST
         //JUNGLE LAKE VOLCANO
-        tilePile[12]= new Tile(TerrainType.JUNGLE, TerrainType.LAKE, TerrainType.VOLCANO);
-        tilePile[13]= new Tile(TerrainType.JUNGLE, TerrainType.LAKE, TerrainType.VOLCANO);
-        tilePile[14]= new Tile(TerrainType.JUNGLE, TerrainType.LAKE, TerrainType.VOLCANO);
+        tilePile[12]= new Tile(TerrainType.JUNGLE, TerrainType.LAKE);
+        tilePile[13]= new Tile(TerrainType.JUNGLE, TerrainType.LAKE);
+        tilePile[14]= new Tile(TerrainType.JUNGLE, TerrainType.LAKE);
 
         //JUNGLE JUNGLE VOLCANO
-        tilePile[15]= new Tile(TerrainType.JUNGLE, TerrainType.JUNGLE, TerrainType.VOLCANO);
-        tilePile[16]= new Tile(TerrainType.JUNGLE, TerrainType.JUNGLE, TerrainType.VOLCANO);
-        tilePile[17]= new Tile(TerrainType.JUNGLE, TerrainType.JUNGLE, TerrainType.VOLCANO);
+        tilePile[15]= new Tile(TerrainType.JUNGLE, TerrainType.JUNGLE);
+        tilePile[16]= new Tile(TerrainType.JUNGLE, TerrainType.JUNGLE);
+        tilePile[17]= new Tile(TerrainType.JUNGLE, TerrainType.JUNGLE);
 
         //JUNGLE GRASSLANDS VOLCANO
-        tilePile[18]= new Tile(TerrainType.JUNGLE, TerrainType.GRASSLANDS, TerrainType.VOLCANO);
-        tilePile[19]= new Tile(TerrainType.JUNGLE, TerrainType.GRASSLANDS, TerrainType.VOLCANO);
-        tilePile[20]= new Tile(TerrainType.JUNGLE, TerrainType.GRASSLANDS, TerrainType.VOLCANO);
+        tilePile[18]= new Tile(TerrainType.JUNGLE, TerrainType.GRASSLANDS);
+        tilePile[19]= new Tile(TerrainType.JUNGLE, TerrainType.GRASSLANDS);
+        tilePile[20]= new Tile(TerrainType.JUNGLE, TerrainType.GRASSLANDS);
 
         //JUNGLE ROCKY VOLCANO
-        tilePile[21]= new Tile(TerrainType.JUNGLE, TerrainType.ROCKY, TerrainType.VOLCANO);
-        tilePile[22]= new Tile(TerrainType.JUNGLE, TerrainType.ROCKY, TerrainType.VOLCANO);
-        tilePile[23]= new Tile(TerrainType.JUNGLE, TerrainType.ROCKY, TerrainType.VOLCANO);
+        tilePile[21]= new Tile(TerrainType.JUNGLE, TerrainType.ROCKY);
+        tilePile[22]= new Tile(TerrainType.JUNGLE, TerrainType.ROCKY);
+        tilePile[23]= new Tile(TerrainType.JUNGLE, TerrainType.ROCKY);
 
         //GRASSLANDS FIRST
         //GRASSLANDS LAKE VOLCANO
-        tilePile[24]= new Tile(TerrainType.GRASSLANDS, TerrainType.LAKE, TerrainType.VOLCANO);
-        tilePile[25]= new Tile(TerrainType.GRASSLANDS, TerrainType.LAKE, TerrainType.VOLCANO);
-        tilePile[26]= new Tile(TerrainType.GRASSLANDS, TerrainType.LAKE, TerrainType.VOLCANO);
+        tilePile[24]= new Tile(TerrainType.GRASSLANDS, TerrainType.LAKE);
+        tilePile[25]= new Tile(TerrainType.GRASSLANDS, TerrainType.LAKE);
+        tilePile[26]= new Tile(TerrainType.GRASSLANDS, TerrainType.LAKE);
 
         //GRASSLANDS JUNGLE VOLCANO
-        tilePile[27]= new Tile(TerrainType.GRASSLANDS, TerrainType.JUNGLE, TerrainType.VOLCANO);
-        tilePile[28]= new Tile(TerrainType.GRASSLANDS, TerrainType.JUNGLE, TerrainType.VOLCANO);
-        tilePile[29]= new Tile(TerrainType.GRASSLANDS, TerrainType.JUNGLE, TerrainType.VOLCANO);
+        tilePile[27]= new Tile(TerrainType.GRASSLANDS, TerrainType.JUNGLE);
+        tilePile[28]= new Tile(TerrainType.GRASSLANDS, TerrainType.JUNGLE);
+        tilePile[29]= new Tile(TerrainType.GRASSLANDS, TerrainType.JUNGLE);
 
         //GRASSLANDS GRASSLANDS VOLCANO
-        tilePile[30]= new Tile(TerrainType.GRASSLANDS, TerrainType.GRASSLANDS, TerrainType.VOLCANO);
-        tilePile[31]= new Tile(TerrainType.GRASSLANDS, TerrainType.GRASSLANDS, TerrainType.VOLCANO);
-        tilePile[32]= new Tile(TerrainType.GRASSLANDS, TerrainType.GRASSLANDS, TerrainType.VOLCANO);
+        tilePile[30]= new Tile(TerrainType.GRASSLANDS, TerrainType.GRASSLANDS);
+        tilePile[31]= new Tile(TerrainType.GRASSLANDS, TerrainType.GRASSLANDS);
+        tilePile[32]= new Tile(TerrainType.GRASSLANDS, TerrainType.GRASSLANDS);
 
         //GRASSLANDS ROCKY VOLCANO
-        tilePile[33]= new Tile(TerrainType.GRASSLANDS, TerrainType.ROCKY, TerrainType.VOLCANO);
-        tilePile[34]= new Tile(TerrainType.GRASSLANDS, TerrainType.ROCKY, TerrainType.VOLCANO);
-        tilePile[35]= new Tile(TerrainType.GRASSLANDS, TerrainType.ROCKY, TerrainType.VOLCANO);
+        tilePile[33]= new Tile(TerrainType.GRASSLANDS, TerrainType.ROCKY);
+        tilePile[34]= new Tile(TerrainType.GRASSLANDS, TerrainType.ROCKY);
+        tilePile[35]= new Tile(TerrainType.GRASSLANDS, TerrainType.ROCKY);
 
         //ROCKY FIRST
         //ROCKY LAKE VOLCANO
-        tilePile[36]= new Tile(TerrainType.ROCKY, TerrainType.LAKE, TerrainType.VOLCANO);
-        tilePile[37]= new Tile(TerrainType.ROCKY, TerrainType.LAKE, TerrainType.VOLCANO);
-        tilePile[38]= new Tile(TerrainType.ROCKY, TerrainType.LAKE, TerrainType.VOLCANO);
+        tilePile[36]= new Tile(TerrainType.ROCKY, TerrainType.LAKE);
+        tilePile[37]= new Tile(TerrainType.ROCKY, TerrainType.LAKE);
+        tilePile[38]= new Tile(TerrainType.ROCKY, TerrainType.LAKE);
 
         //ROCKY JUNGLE VOLCANO
-        tilePile[39]= new Tile(TerrainType.ROCKY, TerrainType.JUNGLE, TerrainType.VOLCANO);
-        tilePile[40]= new Tile(TerrainType.ROCKY, TerrainType.JUNGLE, TerrainType.VOLCANO);
-        tilePile[41]= new Tile(TerrainType.ROCKY, TerrainType.JUNGLE, TerrainType.VOLCANO);
+        tilePile[39]= new Tile(TerrainType.ROCKY, TerrainType.JUNGLE);
+        tilePile[40]= new Tile(TerrainType.ROCKY, TerrainType.JUNGLE);
+        tilePile[41]= new Tile(TerrainType.ROCKY, TerrainType.JUNGLE);
 
         //ROCKY GRASSLANDS VOLCANO
-        tilePile[42]= new Tile(TerrainType.ROCKY, TerrainType.GRASSLANDS, TerrainType.VOLCANO);
-        tilePile[43]= new Tile(TerrainType.ROCKY, TerrainType.GRASSLANDS, TerrainType.VOLCANO);
-        tilePile[44]= new Tile(TerrainType.ROCKY, TerrainType.GRASSLANDS, TerrainType.VOLCANO);
+        tilePile[42]= new Tile(TerrainType.ROCKY, TerrainType.GRASSLANDS);
+        tilePile[43]= new Tile(TerrainType.ROCKY, TerrainType.GRASSLANDS);
+        tilePile[44]= new Tile(TerrainType.ROCKY, TerrainType.GRASSLANDS);
 
         //ROCKY ROCKY VOLCANO
-        tilePile[45]= new Tile(TerrainType.ROCKY, TerrainType.ROCKY, TerrainType.VOLCANO);
-        tilePile[46]= new Tile(TerrainType.ROCKY, TerrainType.ROCKY, TerrainType.VOLCANO);
-        tilePile[47]= new Tile(TerrainType.ROCKY, TerrainType.ROCKY, TerrainType.VOLCANO);
+        tilePile[45]= new Tile(TerrainType.ROCKY, TerrainType.ROCKY);
+        tilePile[46]= new Tile(TerrainType.ROCKY, TerrainType.ROCKY);
+        tilePile[47]= new Tile(TerrainType.ROCKY, TerrainType.ROCKY);
 
         //Randomize tilePile and instantiate gameDeck
         tilePile = randomizeTilePile(tilePile);
@@ -114,57 +114,6 @@ public class Deck {
 
     public boolean isEmpty() {
         return gameDeck.isEmpty();
-    }
-
-    public void printDeck(){
-        for(int i = 0; i < 48; i++) {
-            System.out.println("TILE " + (i+1) + "!!!");
-            if(gameDeck.get(i).getTerrainTypeForPosition(HexagonPosition.MIDDLE) == TerrainType.LAKE){
-                System.out.println("TOP is LAKE");
-            }
-            else if(gameDeck.get(i).getTerrainTypeForPosition(HexagonPosition.MIDDLE) == TerrainType.JUNGLE){
-                System.out.println("TOP is JUNGLE");
-            }
-            else if(gameDeck.get(i).getTerrainTypeForPosition(HexagonPosition.MIDDLE) == TerrainType.ROCKY){
-                System.out.println("TOP is ROCKY");
-            }
-            else if(gameDeck.get(i).getTerrainTypeForPosition(HexagonPosition.MIDDLE) == TerrainType.VOLCANO){
-                System.out.println("TOP is VOLCANO");
-            }
-            else if(gameDeck.get(i).getTerrainTypeForPosition(HexagonPosition.MIDDLE) == TerrainType.GRASSLANDS) {
-                System.out.println("TOP is GRASSLANDS");
-            }
-            if(gameDeck.get(i).getTerrainTypeForPosition(HexagonPosition.LEFT) == TerrainType.LAKE){
-                System.out.println("LEFT is LAKE");
-            }
-            else if(gameDeck.get(i).getTerrainTypeForPosition(HexagonPosition.LEFT) == TerrainType.JUNGLE){
-                System.out.println("LEFT is JUNGLE");
-            }
-            else if(gameDeck.get(i).getTerrainTypeForPosition(HexagonPosition.LEFT) == TerrainType.ROCKY){
-                System.out.println("LEFT is ROCKY");
-            }
-            else if(gameDeck.get(i).getTerrainTypeForPosition(HexagonPosition.LEFT) == TerrainType.VOLCANO){
-                System.out.println("LEFT is VOLCANO");
-            }
-            else if(gameDeck.get(i).getTerrainTypeForPosition(HexagonPosition.LEFT) == TerrainType.GRASSLANDS) {
-                System.out.println("LEFT is GRASSLANDS");
-            }
-            if(gameDeck.get(i).getTerrainTypeForPosition(HexagonPosition.RIGHT) == TerrainType.LAKE){
-                System.out.println("RIGHT is LAKE");
-            }
-            else if(gameDeck.get(i).getTerrainTypeForPosition(HexagonPosition.RIGHT) == TerrainType.JUNGLE){
-                System.out.println("RIGHT is JUNGLE");
-            }
-            else if(gameDeck.get(i).getTerrainTypeForPosition(HexagonPosition.RIGHT) == TerrainType.ROCKY){
-                System.out.println("RIGHT is ROCKY");
-            }
-            else if(gameDeck.get(i).getTerrainTypeForPosition(HexagonPosition.RIGHT) == TerrainType.VOLCANO){
-                System.out.println("RIGHT is VOLCANO");
-            }
-            else if(gameDeck.get(i).getTerrainTypeForPosition(HexagonPosition.RIGHT) == TerrainType.GRASSLANDS) {
-                System.out.println("RIGHT is GRASSLANDS");
-            }
-        }
     }
 
     private Tile[] randomizeTilePile(Tile[] tiles){
