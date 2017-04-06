@@ -1,14 +1,10 @@
-import javafx.geometry.Point3D;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Arrays;
-
-import java.util.Comparator;
 
 public class BoardTests {
     @Test
@@ -94,6 +90,31 @@ public class BoardTests {
                 new Point(1, 0),
                 new Point(1, 1),
                 new Point(0, 2)
+        ));
+
+        Assert.assertTrue(expected.equals(offsets));
+    }
+
+    @Test
+    public void testBoardFindsAllVolcanoes() {
+        Board board = new Board();
+
+        Tile firstTile = new Tile(TerrainType.LAKE, TerrainType.GRASSLANDS);
+        firstTile.setOrientation(4);
+
+        board.placeTile(firstTile, Board.axialToCube(new Point(1, 1)));
+
+        Tile secondTile = new Tile(TerrainType.ROCKY, TerrainType.JUNGLE);
+        secondTile.setOrientation(5);
+
+        board.placeTile(secondTile, Board.axialToCube(new Point(-2, 2)));
+
+        Set<Point> offsets = board.volcanoesOnCurrentlyPlayedBoard().keySet();
+
+        Set<Point> expected = new HashSet<Point>(Arrays.asList(
+                new Point(0, 0),
+                new Point(1, 1),
+                new Point(-2, 2)
         ));
 
         Assert.assertTrue(expected.equals(offsets));

@@ -3,6 +3,7 @@
  */
 import java.awt.Point;
 import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class GameAI implements GameActionPerformer {
     private int id;
@@ -15,16 +16,21 @@ public class GameAI implements GameActionPerformer {
 
     /** DO NOT MODIFY THE BOARD. I'M SORRY BUT DEADLINES ARE DEATH */
     public Point tileAction(Tile tile, Board board) {
+
+        /**** PLACE AT EDGE ****/
         Set<Point> edgePoints = board.offsetsAtEdgeOfCurrentlyPlayedBoard().keySet();
+        tile.setOrientation(ThreadLocalRandom.current().nextInt(1,7));
+
         while (true) {
             for (Point edgeOffset : edgePoints) {
-                if (board.canPlaceTileAtOffset(tile, edgeOffset)) {
+                if (board.canPlaceTileAtEdgeOffset(tile, edgeOffset)) {
                     return edgeOffset;
                 }
             }
             int orientation = tile.getOrientation();
             tile.setOrientation(orientation + 1);
         }
+        /*********************/
     }
 
     /** DO NOT MODIFY THE BOARD. I'M SORRY BUT DEADLINES ARE DEATH */

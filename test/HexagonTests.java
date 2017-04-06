@@ -27,8 +27,8 @@ public class HexagonTests {
         TerrainType grass = TerrainType.GRASSLANDS;
         hex.setTerrainType(grass);
         hex.incrementLevel();
-        hex.addPiece(new Meeple(1));
-        Assert.assertEquals(true, hex.getMeepleOnTop());
+        hex.setOccupied(true);
+        Assert.assertEquals(true, hex.isOccupied());
     }
     @Test
     public void getTotoroOnTopTest() {
@@ -36,8 +36,8 @@ public class HexagonTests {
         TerrainType grass = TerrainType.GRASSLANDS;
         hex.setTerrainType(grass);
         hex.incrementLevel();
-        hex.addPiece(new Totoro(1));
-        Assert.assertEquals(true, hex.getTotoroOnTop());
+        hex.setTotoroOnTop(true);
+        Assert.assertEquals(true, hex.isTotoroOnTop());
     }
     @Test
     public void getTigerOnTopTest() {
@@ -48,85 +48,7 @@ public class HexagonTests {
         hex.incrementLevel();
         hex.incrementLevel();
         Assert.assertEquals(3, hex.getLevel());
-        hex.addPiece(new Tiger(1));
-        Assert.assertEquals(true, hex.getTigerOnTop());
+        hex.setTigerOnTop(true);
+        Assert.assertEquals(true, hex.isTigerOnTop());
     }
-    @Test
-    public void getMeepleSizeTest() {
-        Hexagon hex = new Hexagon();
-        TerrainType grass = TerrainType.GRASSLANDS;
-        hex.setTerrainType(grass);
-        hex.incrementLevel();
-        hex.incrementLevel();
-        hex.incrementLevel();
-        hex.addPiece(new Meeple(1));
-        hex.addPiece(new Meeple(1));
-        hex.addPiece(new Meeple(1));
-        Assert.assertEquals(3, hex.getMeepleSize());
-    }
-    @Test
-    public void getTotoroSizeTest() {
-        Hexagon hex = new Hexagon();
-        TerrainType grass = TerrainType.GRASSLANDS;
-        hex.setTerrainType(grass);
-        hex.incrementLevel();
-        hex.addPiece(new Totoro(1));
-        Assert.assertEquals(1, hex.getTotoroSize());
-    }
-    @Test
-    public void getTigerSizeTest() {
-        Hexagon hex = new Hexagon();
-        TerrainType grass = TerrainType.GRASSLANDS;
-        hex.setTerrainType(grass);
-        hex.incrementLevel();
-        hex.incrementLevel();
-        hex.incrementLevel();
-        hex.addPiece(new Tiger(1));
-        Assert.assertEquals(1, hex.getTigerSize());
-    }
-    @Test
-    public void getMeepleTest() {
-        Hexagon hex = new Hexagon();
-        TerrainType grass = TerrainType.GRASSLANDS;
-        hex.setTerrainType(grass);
-        hex.incrementLevel();
-        hex.addPiece(new Meeple(1));
-        Assert.assertTrue(hex.getPiece() instanceof Meeple);
-    }
-    @Test
-    public void getTotoroTest() {
-        Hexagon hex = new Hexagon();
-        TerrainType grass = TerrainType.GRASSLANDS;
-        hex.setTerrainType(grass);
-        hex.incrementLevel();
-        hex.addPiece(new Totoro(1));
-        Assert.assertTrue(hex.getPiece() instanceof Totoro);
-    }
-    @Test
-    public void getTigerTest() {
-        Hexagon hex = new Hexagon();
-        TerrainType grass = TerrainType.GRASSLANDS;
-        hex.setTerrainType(grass);
-        hex.incrementLevel();
-        hex.incrementLevel();
-        hex.incrementLevel();
-        hex.addPiece(new Tiger(1));
-        Assert.assertTrue(hex.getPiece() instanceof Tiger);
-    }
-    @Test
-    public void removeMeepleTest() {
-        Hexagon hex = new Hexagon();
-        Meeple meepleToBeRemoved = new Meeple(1);
-        TerrainType grass = TerrainType.GRASSLANDS;
-        hex.setTerrainType(grass);
-        hex.incrementLevel();
-        hex.incrementLevel();
-        hex.incrementLevel();
-        hex.addPiece(new Meeple(1));
-        hex.addPiece(new Meeple(1));
-        hex.addPiece(meepleToBeRemoved);
-        hex.removeMeeple(meepleToBeRemoved);
-        Assert.assertEquals(2, hex.getMeepleSize());
-    }
-
 }

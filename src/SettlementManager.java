@@ -1,18 +1,16 @@
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Queue;
-
 /**
  * Created by hugh on 4/2/17.
  * This class is responsible for managing all the settlements on the board
  * It keeps a list of settlements - which are a list of Points
  */
+
+import java.awt.*;
+import java.util.ArrayList;
+
 public class SettlementManager {
     private ArrayList<Settlement> listOfSettlements = new ArrayList<>();
 
-    public SettlementManager(){
+    public SettlementManager() {
 
     }
 
@@ -92,7 +90,8 @@ public class SettlementManager {
     }
 
     public void updateSettlements(Board board) {
-        ArrayList<ArrayList<Hexagon>> gameBoard = board.getGameBoardCopy();
+        /*
+        Hexagon[][] gameBoard = board.boardStorage;
         ArrayList<Hexagon> visited = new ArrayList<>();
         ArrayList<Settlement> updatedListOfSettlements = new ArrayList<>();
 
@@ -307,6 +306,7 @@ public class SettlementManager {
             }
         }
         this.listOfSettlements = updatedListOfSettlements;
+        */
     }
 
 }

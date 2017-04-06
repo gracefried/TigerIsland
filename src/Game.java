@@ -22,9 +22,7 @@ public class Game {
     }
 
     public void applyBuildAction(BuildAction buildAction) {
-        /*
-
-        Point3D point = buildAction.getCoordinates();
+        Point point = buildAction.getCoordinates();
         Integer id = buildAction.getID();
         TerrainType terrainType = buildAction.getTerrainType();
 
@@ -32,14 +30,13 @@ public class Game {
             case FOUND_SETTLEMENT:
                 board.foundSettlementAtPoint(point, id);
             case EXPAND_SETTLEMENT:
-                board.expandSettlement(point, terrainType, id);
+                //FIXME: implement expand
+                //board.expandSettlement(point, terrainType, id);
             case TIGER_PLAYGROUND:
                 board.buildTigerPlayground(point, id);
             case TOTORO_SANCTUARY:
                 board.buildTotoroSanctuary(point, id);
         }
-
-        */
     }
 
     public Board getGameBoard() {
