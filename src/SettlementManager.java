@@ -6,13 +6,14 @@ import java.util.Queue;
 
 /**
  * Created by hugh on 4/2/17.
+ * This class is responsible for managing all the settlements on the board
+ * It keeps a list of settlements - which are a list of Points
  */
 public class SettlementManager {
     private ArrayList<Settlement> listOfSettlements = new ArrayList<>();
-    private Board gameBoard;
 
-    public SettlementManager(Board gameBoard){
-        this.gameBoard = gameBoard;
+    public SettlementManager(){
+
     }
 
     /* TODO: BFS STUFF
@@ -90,6 +91,222 @@ public class SettlementManager {
         mergeSettlement(settlementToAddTo, settlementToDelete);
     }
 
+    public void updateSettlements(Board board) {
+        ArrayList<ArrayList<Hexagon>> gameBoard = board.getGameBoardCopy();
+        ArrayList<Hexagon> visited = new ArrayList<>();
+        ArrayList<Settlement> updatedListOfSettlements = new ArrayList<>();
 
+        int nextTileID = 1;
+        int minBoardX = 3;
+        int maxBoardX = 397;
+        int minBoardY = 3;
+        int maxBoardY = 397;
+
+        for (int ii = minBoardX; ii < maxBoardX; ii++) {
+            for (int jj = minBoardY; jj < maxBoardY; jj++) {
+                if(gameBoard.get(jj).get(ii).getOccupied() && !visited.contains(gameBoard.get(jj).get(ii))) {
+                    Settlement newSettlement = new Settlement(new Point(jj, ii));
+                    Hexagon visitingHexagon = gameBoard.get(jj).get(ii);
+                    int visitingHexagonX = ii;
+                    int visitingHexagonY = jj;
+                    int isEvenOrOdd;
+                    if(visitingHexagonY % 2 == 0){
+                        isEvenOrOdd = 0;
+                    }
+                    else{
+                        isEvenOrOdd = 1;
+                    }
+
+
+                    Hexagon tempHex = board.copyOfHexagonAtPoint(new Point(ii, jj));
+                    int playerID = tempHex.getPiece().getPlayerID();
+                    ArrayList<Hexagon> queue = new ArrayList<>();
+
+                    queue.add(visitingHexagon);
+                    while(!queue.isEmpty()) {
+                        Hexagon hexUp = gameBoard.get(visitingHexagonY-1).get(visitingHexagonX);
+                        Hexagon hexDown = gameBoard.get(visitingHexagonY+1).get(visitingHexagonX);
+                        Hexagon hexUpRight = gameBoard.get(visitingHexagonY-1).get(visitingHexagonX+1);
+                        Hexagon hexUpLeft = gameBoard.get(visitingHexagonY-1).get(visitingHexagonX-1);
+                        Hexagon hexLeft = gameBoard.get(visitingHexagonY).get(visitingHexagonX-1);
+                        Hexagon hexRight = gameBoard.get(visitingHexagonY).get(visitingHexagonX+1);
+                        Hexagon hexDownLeft = gameBoard.get(visitingHexagonY+1).get(visitingHexagonX-1);
+                        Hexagon hexDownRight = gameBoard.get(visitingHexagonY+1).get(visitingHexagonX+1);
+                        //put all of its neighbors into the queue
+                        //Check if it's even
+                        if(isEvenOrOdd == 0) {
+                            if(hexUp.getOccupied()){
+                                if(!visited.contains(hexUp)) {
+                                    if (hexUp.getPiece().getPlayerID() == playerID) {
+                                        queue.add(hexUp);
+                                    }
+                                }
+                            }
+                            else{
+                                visited.add(hexUp);
+                            }
+                            if(hexUpRight.getOccupied()) {
+                                if (!visited.contains(hexUpRight)){
+                                    if (hexUpRight.getPiece().getPlayerID() == playerID) {
+                                        queue.add(hexUpRight);
+                                    }
+                                }
+                            }
+                            else{
+                                visited.add(hexUpRight);
+                            }
+                            if(hexLeft.getOccupied()) {
+                                if( !visited.contains(hexLeft)) {
+                                    if (hexLeft.getPiece().getPlayerID() == playerID) {
+                                        queue.add(hexLeft);
+                                    }
+                                }
+                            }
+                            else{
+                                visited.add(hexLeft);
+                            }
+                            if(hexRight.getOccupied()) {
+                                if(!visited.contains(hexRight)) {
+                                    if (hexRight.getPiece().getPlayerID() == playerID) {
+                                        queue.add(hexRight);
+                                    }
+                                }
+                            }
+                            else{
+                                visited.add(hexRight);
+                            }
+                            if(hexDownRight.getOccupied()) {
+                                if(!visited.contains(hexDownRight)) {
+                                    if (hexDownRight.getPiece().getPlayerID() == playerID) {
+                                        queue.add(hexDownRight);
+                                    }
+                                }
+                            }
+                            else{
+                                visited.add(hexDownRight);
+                            }
+                            if(hexDown.getOccupied()) {
+                                if (!visited.contains(hexDown)){
+                                    if (hexDown.getPiece().getPlayerID() == playerID) {
+                                        queue.add(hexDown);
+                                    }
+                                }
+                            }
+                            else{
+                                visited.add(hexDown);
+                            }
+                        }
+                        //if it's not even, then it's odd
+                        else{
+                            if(hexUp.getOccupied()) {
+                                if(!visited.contains(hexUp)) {
+                                    if (hexUp.getPiece().getPlayerID() == playerID) {
+                                        queue.add(hexUp);
+                                    }
+                                }
+                            }
+                            else{
+                                visited.add(hexUp);
+                            }
+                            if(hexLeft.getOccupied()) {
+                                if (!visited.contains(hexLeft)){
+                                    if (hexLeft.getPiece().getPlayerID() == playerID) {
+                                        queue.add(hexLeft);
+                                    }
+                                }
+                            }
+                            else{
+                                visited.add(hexLeft);
+                            }
+                            if(hexRight.getOccupied()) {
+                                if(!visited.contains(hexRight)) {
+                                    if (hexRight.getPiece().getPlayerID() == playerID) {
+                                        queue.add(hexRight);
+                                    }
+                                }
+                            }
+                            else{
+                                visited.add(hexRight);
+                            }
+                            if(hexDown.getOccupied()) {
+                                if(!visited.contains(hexDown)) {
+                                    if (hexDown.getPiece().getPlayerID() == playerID) {
+                                        queue.add(hexDown);
+                                    }
+                                }
+                            }
+                            else{
+                                visited.add(hexDown);
+                            }
+                            if(hexDownLeft.getOccupied()) {
+                                if(!visited.contains(hexDownLeft)) {
+                                    if (hexDownLeft.getPiece().getPlayerID() == playerID) {
+                                        queue.add(hexDownLeft);
+                                    }
+                                }
+                            }
+                            else{
+                                visited.add(hexDownLeft);
+                            }
+                            if(hexUpLeft.getOccupied()) {
+                                if(!visited.contains(hexUpLeft)) {
+                                    if (hexUpLeft.getPiece().getPlayerID() == playerID) {
+                                        queue.add(hexUpLeft);
+                                    }
+                                }
+                            }
+                            else{
+                                visited.add(hexUpLeft);
+                            }
+                        }
+
+                        //What we do when we visit
+                        //Add our visitingHexagon to the visited list
+                        visited.add(visitingHexagon);
+                        //update settlementCoordinates
+                        newSettlement.getPointsInSettlement().add(new Point(visitingHexagonX, visitingHexagonY));
+                        //pop visitingHexagon out of our queue
+                        queue.remove(0);
+                        //update our visitingHexagon to the front of the queue
+                        visitingHexagon = queue.get(0);
+
+                        //update visitingHexagonX and visitingHexagonY
+                        if(visitingHexagon == hexUp){
+                            visitingHexagonY--;
+                        }
+                        else if(visitingHexagon == hexDown){
+                            visitingHexagonY++;
+                        }
+                        else if(visitingHexagon == hexLeft){
+                            visitingHexagonX--;
+                        }
+                        else if(visitingHexagon == hexRight){
+                            visitingHexagonX++;
+                        }
+                        else if(visitingHexagon == hexDownLeft){
+                            visitingHexagonY++;
+                            visitingHexagonX--;
+                        }
+                        else if(visitingHexagon == hexDownRight){
+                            visitingHexagonY++;
+                            visitingHexagonX++;
+                        }
+                        else if(visitingHexagon == hexUpLeft){
+                            visitingHexagonY--;
+                            visitingHexagonX
+                                    --;
+                        }
+                        else if(visitingHexagon == hexUpRight){
+                            visitingHexagonY--;
+                            visitingHexagonX++;
+                        }
+                    }
+                    updatedListOfSettlements.add(newSettlement);
+                }
+
+            }
+        }
+        this.listOfSettlements = updatedListOfSettlements;
+    }
 
 }
