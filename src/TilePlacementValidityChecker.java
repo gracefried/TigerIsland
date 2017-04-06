@@ -169,17 +169,17 @@ public class TilePlacementValidityChecker {
 //                }
 //                //else none of the spaces  you are potentially nuking are occupied, so you're good
 //            }
-//            //if(firstHexagon.getTotoroOnTop() || secondHexagon.getTotoroOnTop() || thirdHexagon.getTotoroOnTop){
+//            //if(firstHexagon.isTotoroOnTop() || secondHexagon.isTotoroOnTop() || thirdHexagon.isTotoroOnTop){
 //                //You can't nuke a totoro!
 //                //return false;
 //            //}
-//            //if(firstHexagon.getTigerOnTop() || secondHexagon.getTigerOnTop() || thirdHexagon.getTigerOnTop){
+//            //if(firstHexagon.isTigerOnTop() || secondHexagon.isTigerOnTop() || thirdHexagon.isTigerOnTop){
 //                //You can't nuke a tiger!
 //                //return false;
 //            //}
 //
 //
-//            //TODO: need getTotoroOnTop() and need getTigerOnTop()
+//            //TODO: need isTotoroOnTop() and need isTigerOnTop()
 //            //TODO: need getPiece() and getPlayerID
 //            //TODO: need Settlement getSettlementAtPoint(Point point)
 //

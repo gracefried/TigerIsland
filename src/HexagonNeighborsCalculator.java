@@ -7,8 +7,8 @@ import java.util.HashMap;
 public class HexagonNeighborsCalculator {
     private int orientation;
 
-    public HexagonNeighborsCalculator(Tile tile) {
-        this.orientation = tile.getOrientation();
+    public HexagonNeighborsCalculator(int orientation) {
+        this.orientation = orientation;
     }
 
     public HashMap<HexagonPosition, Point> offsetsForAB() {
